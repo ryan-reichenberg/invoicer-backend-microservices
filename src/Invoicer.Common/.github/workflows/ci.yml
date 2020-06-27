@@ -1,9 +1,9 @@
 ﻿name: Invoicer.Common package and publish
 
 on:
-    push:
-        branches:
-            - master
+  push:
+    branches:
+      - master
 
 jobs:
   build:
