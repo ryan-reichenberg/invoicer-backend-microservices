@@ -22,5 +22,5 @@ jobs:
       - run: dotnet build Invoicer.Common
       - name: Create the package
         run: dotnet pack --configuration Release Invoicer.Common
-          - name: Publish the package to GPR
+      - name: Publish the package to GPR
         run: dotnet nuget push Invoicer.Common/bin/Release/*.nupkg
