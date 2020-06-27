@@ -7,9 +7,9 @@ on:
 jobs:
   build:
     # Job name is Greeting
-    name: Build and pubslih
+    name: Build and publish
     # This job runs on Linux
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       # Authenticates packages to push to GPR
