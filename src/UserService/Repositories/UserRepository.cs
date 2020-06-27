@@ -11,8 +11,8 @@ namespace UserService.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly UserDBContext _dbContext;
-        public UserRepository(UserDBContext dbContext)
+        private readonly UserDbContext _dbContext;
+        public UserRepository(UserDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -28,7 +28,7 @@ namespace UserService.Repositories
 
         public async Task<User> FindByIdAsync(string id)
         {
-            return await _dbContext.DataSet.FirstOrDefaultAsync(user => user.Id == id);
+            return await _dbContext.DataSet.FirstOrDefaultAsync(user => user.Id == id); ;
 
         }
 

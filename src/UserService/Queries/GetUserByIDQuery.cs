@@ -7,9 +7,8 @@ namespace UserService.Queries
     public class GetUserByIDQuery : IQuery<User>
     {
         public string Id { get; set; }
-        public GetUserByIDQuery(string id)
+        public GetUserByIDQuery()
         {
-            Id = id;
         }
     }
 }

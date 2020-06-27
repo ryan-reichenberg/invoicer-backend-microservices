@@ -7,14 +7,14 @@ using UserService.Repositories;
 
 namespace UserService.DataAccess
 {
-    public class UserDBContext : DbContext, IDbContext<User>
+    public class UserDbContext : DbContext, IDbContext<User>
     {
         public DbSet<User> DataSet { get; set; }
 
         //public UserDBContext(DbContextOptions<UserDBContext> options) : base(options)
         //{
         //}
-        public UserDBContext()
+        public UserDbContext()
         {
         }
 

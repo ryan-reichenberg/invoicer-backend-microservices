@@ -11,15 +11,15 @@ services:
       - ACCEPT_EULA=Y 
       - MSSQL_PID=Developer
       - SA_PASSWORD=tSlY4ETLAZ
-  # userservice:
-  #   container_name: user_service
-  #   build: UserService
-  #   depends_on:
-  #     - sqlserver
-  #   ports:
-  #     - "5100:5100"
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Production
+  userservice:
+    container_name: user_service
+    build: UserService
+    depends_on:
+      - sqlserver
+    ports:
+      - "5100:5100"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
 volumes:
   sqlserverdata:
     external: true

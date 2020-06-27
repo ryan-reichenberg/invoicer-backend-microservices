@@ -12,6 +12,7 @@ using UserService.DataAccess;
 using UserService.Mappers;
 using UserService.Models;
 using UserService.Queries;
+using UserService.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,11 +21,11 @@ namespace UserService.Controllers
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        private UserDBContext _dbContext;
+        private IUserRepository _repo;
         private readonly ICommandBus _commandBus;
         private readonly IQueryBus _queryBus;
-        public UsersController(ICommandBus commandBus, IQueryBus queryBus) {
-            //_dbContext = dBContext;
+        public UsersController(IUserRepository repo, ICommandBus commandBus, IQueryBus queryBus) {
+            _repo = repo;
             _commandBus = commandBus;
             _queryBus = queryBus;
         }
@@ -33,14 +34,14 @@ namespace UserService.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             Console.WriteLine("Worked");
-            return Ok(await _dbContext.DataSet.ToListAsync());
+            return Ok();
         }
 
         // GET api/users/5
         [HttpGet("{Id}", Name = "GetUserById")]
-        public async Task<IActionResult> GetUserById([FromBody]GetUserByIDQuery query)
+        public async Task<IActionResult> GetUserById(string id)
         {
-            var users = await _queryBus.Query<GetUserByIDQuery, User>(query);
+            var users = await _queryBus.Query<GetUserByIDQuery, User>(new GetUserByIDQuery() { Id = id }); ;
             //string id = new Guid().ToString();
             //var users = await _dbContext.DataSet.FirstOrDefaultAsync(x => x.Id == id);
             return Ok(users);
