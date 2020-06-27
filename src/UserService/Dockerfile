@@ -8,9 +8,6 @@ RUN dotnet restore
 # Copy everything else and build
 COPY . ./
 
-# Copy dependencies
-COPY ../Invoicer.Common/*.csproj ../Invoicer.Common
-
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
