@@ -21,6 +21,6 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: dotnet build src/Invoicer.Common
       - name: Create the package
-        run: dotnet pack --configuration Release Invoicer.Common
+        run: dotnet pack --configuration Release src/Invoicer.Common
       - name: Publish the package to GPR
         run: dotnet nuget push src/Invoicer.Common/bin/Release/*.nupkg
