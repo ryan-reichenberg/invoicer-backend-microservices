@@ -18,9 +18,9 @@ namespace Invoicer.Common
             .AsImplementedInterfaces();
 
             builder.RegisterAssemblyTypes(ExecutingAssembly)
-                .Where(t => t.IsClosedTypeOf(typeof(IDbContext<>)))
+                .AsClosedTypesOf(typeof(IDbContext<>))
                 .AsSelf()
-                .InstancePerLifetimeScope();
+                .InstancePerDependency();
 
         }
     }
