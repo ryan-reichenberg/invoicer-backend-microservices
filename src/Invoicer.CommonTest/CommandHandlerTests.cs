@@ -10,21 +10,24 @@ namespace Invoicer.CommonTest
     public class CommandHandlerTests
     {
         [Fact]
-        public void TestCommandHandler()
+        public void TestCommandBus()
         {
-            // Arrange
-            var command = new Mock<ICommand>();
-            var handler = new Mock<ICommandHandler<ICommand>>();
-            handler.Setup(x => x.Handle(command.Object));
+            using (var mock = AutoMock.GetLoose()) {
+                var bus = mock.Create<CommandBus>();
+                bus.Send(new TestCommand());
+                Assert.NotNull(bus);
+                Assert.Equal(1, TestCommandHandler.Value);
+            }
+        }
 
-            using (var mock = AutoMock.GetLoose(cfg => cfg.RegisterMock(handler)))
+
+        public class TestCommand : ICommand { }
+        public class TestCommandHandler : ICommandHandler<TestCommand>
+        {
+            public static int Value { get; set; }
+            public void Handle(TestCommand command)
             {
-                // mockA will be injected into TestComponent as IServiceA
-                var component = mock.Create<CommandBus>();
-                component.Send(command.Object);
-
-                handler.Verify(m => m.Handle(command.Object), Times.Once);
-                // ...and the rest of the test
+                Value = 1;
             }
         }
     }
