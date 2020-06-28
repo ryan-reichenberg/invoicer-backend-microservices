@@ -15,7 +15,6 @@ namespace Invoicer.CommonTest
             using (var mock = AutoMock.GetLoose()) {
                 var bus = mock.Create<CommandBus>();
                 bus.Send(new TestCommand());
-                Assert.NotNull(bus);
                 Assert.Equal(1, TestCommandHandler.Value);
             }
         }
