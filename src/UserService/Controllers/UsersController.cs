@@ -34,7 +34,8 @@ namespace UserService.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             Console.WriteLine("Worked");
-            return Ok();
+            User user = await _repo.DeleteAsync("1");
+            return Ok(user);
         }
 
         // GET api/users/5

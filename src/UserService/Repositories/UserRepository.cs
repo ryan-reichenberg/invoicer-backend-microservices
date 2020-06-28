@@ -18,11 +18,12 @@ namespace UserService.Repositories
         }
 
 
-        public async Task DeleteAsync(string id)
+        public async Task<User> DeleteAsync(string id)
         {
             var user = await FindByIdAsync(id) ?? throw new NullReferenceException($"Cannot find user with id: {id}");
             _dbContext.DataSet.Remove(user);
             await _dbContext.SaveChangesAsync();
+            return user;
 
         }
 

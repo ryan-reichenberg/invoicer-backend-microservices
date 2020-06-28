@@ -25,15 +25,16 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Invoicer.Common\Invoicer.Common.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
+    <PackageReference Include="InvoiceCommonLib" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Migrations\20200223104349_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\UserDBContextModelSnapshot.cs" />
     <Compile Remove="Migrations\20200223104349_InitialCreate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\APIGateway\APIGateway.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>
