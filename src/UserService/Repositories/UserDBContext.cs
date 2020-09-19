@@ -1,26 +1,20 @@
 ﻿using System;
 using Invoicer.Common.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Polly;
 using UserService.Models;
-using UserService.Repositories;
 
-namespace UserService.DataAccess
+namespace UserService.Repositories
 {
     public class UserDbContext : DbContext, IDbContext<User>
     {
         public DbSet<User> DataSet { get; set; }
 
-        //public UserDBContext(DbContextOptions<UserDBContext> options) : base(options)
-        //{
-        //}
-        public UserDbContext()
+        // Causing problems for migration generation:
+        // System.MissingMethodException: No parameterless constructor defined for type 'UserService.Repositories.UserDbContext'.
+        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
         {
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("server=localhost,1434;user id=sa;password=tSlY4ETLAZ;database=UserManagement;");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

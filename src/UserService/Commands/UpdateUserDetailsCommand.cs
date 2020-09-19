@@ -4,7 +4,7 @@ using UserService.Models;
 
 namespace UserService.Commands
 {
-    public class UpdateUserDetailsCommand : ICommand
+    public class UpdateUserDetailsCommand : UserCommand
     {
         public readonly string Id;
         public readonly UserUpdateDetails UpdateDetais;

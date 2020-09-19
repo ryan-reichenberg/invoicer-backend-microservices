@@ -14,9 +14,9 @@ namespace UserService.Queries.Handlers
             _repository = repository;
         }
         
-        public async Task<User> Handle(GetUserByIDQuery query)
+        public Task<User> Handle(GetUserByIDQuery query)
         {
-            return await _repository.FindByIdAsync(new Guid().ToString());
+            return _repository.FindByIdAsync(new Guid().ToString());
         }
     }
 }

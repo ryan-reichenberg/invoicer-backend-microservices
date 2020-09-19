@@ -13,19 +13,21 @@
     <Folder Include="Commands\Handlers\" />
     <Folder Include="Queries\" />
     <Folder Include="Queries\Handlers\" />
+    <Folder Include="Models\ValueObjects\" />
+    <Folder Include="Models\Entities\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="InvoiceCommonLib" Version="1.0.0-alpha" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
     <PackageReference Include="Polly" Version="7.2.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="InvoiceCommonLib" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Migrations\20200223104349_InitialCreate.Designer.cs" />
@@ -33,8 +35,9 @@
     <Compile Remove="Migrations\20200223104349_InitialCreate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\APIGateway\APIGateway.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
+    <Content Remove="nuget.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Projects\Invoicer.Common\src\Invoicer.Common\Invoicer.Common.csproj" />
   </ItemGroup>
 </Project>

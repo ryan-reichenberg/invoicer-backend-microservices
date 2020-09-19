@@ -1,14 +1,28 @@
 ﻿using System;
+using System.Net;
+using System.Threading.Tasks;
+using Invoicer.Common;
 using Invoicer.Common.Handlers;
+using UserService.Models;
+using UserService.Mappers;
+using UserService.Repositories;
 
 namespace UserService.Commands.Handlers
 {
     public class UpdateUserDetailsCommandHandler : ICommandHandler<UpdateUserDetailsCommand>
     {
-
-        public void Handle(UpdateUserDetailsCommand command)
+        private IUserRepository _repository;
+        public UpdateUserDetailsCommandHandler(IUserRepository repository)
         {
-            Console.WriteLine($"Create user {command.Id} {command.UpdateDetais} - handler");
+            _repository = repository;
+        }
+
+
+        public async Task<CommandResult> Handle(UpdateUserDetailsCommand command)
+        {
+            User user =  await _repository.SaveAsync(command.MapToUser());
+            if (user == null) CommandResult.Failure(HttpStatusCode.NotModified, "No new details to update");
+            return CommandResult.Success();
         }
     }
 }

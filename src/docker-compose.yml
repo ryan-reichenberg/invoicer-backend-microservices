@@ -1,10 +1,21 @@
 version: '3'
 services:
+  rabbitmqserver:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmqserver
+    hostname: 'rabbit-mq-host'
+    volumes:
+      - "$PWD/.docker/rabbitmq/etc/:/etc/rabbitmq/"
+      - "$PWD/.docker/rabbitmq/data/:/var/lib/rabbitmq/"
+      - "$PWD/.docker/rabbitmq/logs/:/var/log/rabbitmq/"
+    ports:
+      - 5672:5672
+      - 15672:15672
   sqlserver:
     image: microsoft/mssql-server-linux:latest
     container_name: sqlserver
     volumes:
-      - sqlserverdata:/var/opt/mssql 
+      - $PWD/.docker/sqlserver/data:/var/opt/mssql 
     ports:
       - "1434:1433"
     environment:
@@ -16,10 +27,8 @@ services:
     build: UserService
     depends_on:
       - sqlserver
+      - rabbitmqserver
     ports:
       - "5100:5100"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-volumes:
-  sqlserverdata:
-    external: true

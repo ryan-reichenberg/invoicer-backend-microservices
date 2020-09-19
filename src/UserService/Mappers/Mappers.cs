@@ -7,13 +7,13 @@ namespace UserService.Mappers
     public static class Mappers
     {
 
-        public static User MapToUser(this RegisterUserCommand command) => new User
+        public static User MapToUser(this UserCommand command) => new User
         {
-            Id = Guid.NewGuid().ToString(),
+            Id = command.Id != null ? command.Id : Guid.NewGuid().ToString(),
             Name = command.Name,
-            Address = command.Address.StreetAddress,
-            PostalCode = command.Address.PostalCode,
+            StreetAddress =  command.Address.StreetAddress,
             City = command.Address.City,
+            PostalCode = command.Address.PostalCode,
             MobileNumber = command.MobileNumber,
             EmailAddress = command.EmailAddress
         };

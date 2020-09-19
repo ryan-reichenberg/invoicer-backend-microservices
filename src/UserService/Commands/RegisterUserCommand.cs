@@ -4,15 +4,11 @@ using UserService.Models;
 
 namespace UserService.Commands
 {
-    public class RegisterUserCommand : ICommand
+    public class RegisterUserCommand : UserCommand
     {
-        public readonly string Name;
-        public readonly Address Address;
-        public string MobileNumber;
-        public string EmailAddress;
-
-        public RegisterUserCommand(string name, string mobileNumber, string emailAddress, Address address)
+        public RegisterUserCommand(string id, string name, string mobileNumber, string emailAddress, Address address)
         {
+            Id = id;
             Name = name;
             Address = address;
             MobileNumber = mobileNumber;

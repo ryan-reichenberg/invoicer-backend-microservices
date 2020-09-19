@@ -1,13 +1,14 @@
+using System;
 using System.Reflection;
 using Autofac;
 using Invoicer.Common;
-using Invoicer.Common.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using UserService.DataAccess;
+using UserService.Repositories;
 
 namespace UserService
 {
@@ -23,6 +24,8 @@ namespace UserService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<UserDbContext>(options => 
+                options.UseSqlServer(_configuration.GetConnectionString("UserManagementCN")));
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .AddNewtonsoftJson();
         }
@@ -37,14 +40,15 @@ namespace UserService
             app.UseMvc();
 
             // auto migrate db
-            //using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            //{
-            //    scope.ServiceProvider.GetService<UserDBContext>().MigrateDB();
-            //}
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                Console.WriteLine("Running migration");
+                scope.ServiceProvider.GetService<UserDbContext>().MigrateDB();
+            }
         }
 
         public void ConfigureContainer(ContainerBuilder containerBuilder) {
-            containerBuilder.RegisterModule(new InitializeModule() { assembly = Assembly.GetExecutingAssembly() });
+            containerBuilder.RegisterModule(new InitializeModule() { assembly = Assembly.GetExecutingAssembly()});
         }
     }
 }

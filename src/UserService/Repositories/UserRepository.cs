@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Invoicer.Common.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using UserService.DataAccess;
+using Microsoft.Extensions.Logging;
 using UserService.Models;
 
 namespace UserService.Repositories
@@ -12,11 +12,12 @@ namespace UserService.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly UserDbContext _dbContext;
-        public UserRepository(UserDbContext dbContext)
+        private readonly ILogger _logger;
+        public UserRepository(UserDbContext dbContext, ILogger logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
-
 
         public async Task<User> DeleteAsync(string id)
         {
@@ -33,18 +34,27 @@ namespace UserService.Repositories
 
         }
 
-        public async Task SaveOrUpdateAsync(User entity)
+        public async Task<User> UpdateAsync(User entity)
         {
             var user = await FindByIdAsync(entity.Id);
             if (user == null)
             {
-                await _dbContext.DataSet.AddAsync(entity);
+                // problem
+                return null;
             }
-            else {
-                if (user == entity) { throw new Exception("Nothing to update"); }
+
+            if (user == entity)
+            {
+                _logger.LogDebug("No new data to update");
+                user = null;
+            }
+            else
+            {
                 Type type = typeof(User);
-                foreach(PropertyInfo property in type.GetProperties()){
-                    if (property.GetValue(user) != property.GetValue(entity)) {
+                foreach (PropertyInfo property in type.GetProperties())
+                {
+                    if (property.GetValue(user) != property.GetValue(entity))
+                    {
                         property.SetValue(user, property.GetValue(entity));
                     }
                 }
@@ -53,6 +63,25 @@ namespace UserService.Repositories
                 await _dbContext.SaveChangesAsync();
             }
 
+            return user;
+        }
+
+        public async Task<User> SaveAsync(User entity)
+        {
+            var user = await FindByIdAsync(entity.Id);
+            if (user == null)
+            {
+                await _dbContext.DataSet.AddAsync(entity);
+                await _dbContext.SaveChangesAsync();
+                user = entity;
+            }
+            else
+            {
+                _logger.LogDebug($"User[{entity}] already exists");
+                user = null;
+            }
+
+            return user;
         }
 
         public async Task<List<User>> FindAllAsync() {

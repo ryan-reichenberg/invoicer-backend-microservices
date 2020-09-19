@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Invoicer.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserService.Commands;
-using UserService.DataAccess;
-using UserService.Mappers;
 using UserService.Models;
 using UserService.Queries;
 using UserService.Repositories;
@@ -21,11 +17,9 @@ namespace UserService.Controllers
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        private IUserRepository _repo;
         private readonly ICommandBus _commandBus;
         private readonly IQueryBus _queryBus;
-        public UsersController(IUserRepository repo, ICommandBus commandBus, IQueryBus queryBus) {
-            _repo = repo;
+        public UsersController( ICommandBus commandBus, IQueryBus queryBus) {
             _commandBus = commandBus;
             _queryBus = queryBus;
         }
@@ -33,8 +27,7 @@ namespace UserService.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            Console.WriteLine("Worked");
-            User user = await _repo.DeleteAsync("1");
+            List<User> user = await _queryBus.Query<GetAllUsersQuery, List<User>>(new GetAllUsersQuery());
             return Ok(user);
         }
 
@@ -42,7 +35,7 @@ namespace UserService.Controllers
         [HttpGet("{Id}", Name = "GetUserById")]
         public async Task<IActionResult> GetUserById(string id)
         {
-            var users = await _queryBus.Query<GetUserByIDQuery, User>(new GetUserByIDQuery() { Id = id }); ;
+            var users =  await _queryBus.Query<GetUserByIDQuery, User>(new GetUserByIDQuery() { Id = id }); ;
             //string id = new Guid().ToString();
             //var users = await _dbContext.DataSet.FirstOrDefaultAsync(x => x.Id == id);
             return Ok(users);
@@ -56,18 +49,16 @@ namespace UserService.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //User user = command.MapToUser();
-                    _commandBus.Send(command);
-                    // insert user
-                    //_dbContext.Users.Add(user);
-                    //await _dbContext.SaveChangesAsync();
+                    // send command
+                    await _commandBus.Send(command);
 
-                    // send event
+                    // send events
+                    // send confirmation email
+                    // 
 
                     // return result
-                    return Ok(command);
+                    return Ok(new {status = Action.ConfirmationSent.ToString()});
                 }
-                return BadRequest();
             }
             catch (DbUpdateException)
             {
@@ -75,20 +66,43 @@ namespace UserService.Controllers
                     "Try again, and if the problem persists " +
                     "please, see your system administrator.");
                 return StatusCode(StatusCodes.Status500InternalServerError);
-                throw;
             }
+            return BadRequest();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(int id, [FromBody]UpdateUserDetailsCommand command)
         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // send command
+                   await _commandBus.Send(command);
+
+                    // send event
+                    //RabbitMQ goes here
+
+                    // return result
+                    return Ok(new {status = Action.ConfirmationSent.ToString()});
+                }
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Unable to persist changes. " +
+                                             "Try again, and if the problem persists " +
+                                             "please, see your system administrator.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return BadRequest();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete([FromBody]DeleteUserCommand command)
         {
+            return await _commandBus.Send(command);
         }
     }
 }

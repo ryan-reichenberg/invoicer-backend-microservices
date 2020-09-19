@@ -8,7 +8,8 @@ namespace UserService.Repositories
     public interface IUserRepository
     {
         Task<User> FindByIdAsync(string id);
-        Task<User> SaveOrUpdateAsync(User entity);
+        Task<User> SaveAsync(User entity);
+        Task<User> UpdateAsync(User entity);
         Task<User> DeleteAsync(string id);
         Task<List<User>> FindAllAsync();
     }
