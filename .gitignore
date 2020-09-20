@@ -16,8 +16,8 @@
 *.sln.docstates
 
 # RabbitMQ
-.docker/rabbitmq/data
-.docker/rabbitmq/logs
+**/.docker/rabbitmq/data
+**/.docker/rabbitmq/logs
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
