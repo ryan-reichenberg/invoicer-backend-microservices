@@ -12,5 +12,10 @@ namespace UserService.Models
         public string MobileNumber { get; set; }
         public string EmailAddress { get; set; }
         public bool Deactivated { get; set; }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

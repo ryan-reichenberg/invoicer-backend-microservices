@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Invoicer.Common;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserService.Commands;
 using UserService.Models;
 using UserService.Queries;
-using UserService.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,15 +19,15 @@ namespace UserService.Controllers
     {
         private readonly ICommandBus _commandBus;
         private readonly IQueryBus _queryBus;
-        public UsersController( ICommandBus commandBus, IQueryBus queryBus) {
-            _commandBus = commandBus;
-            _queryBus = queryBus;
+        public UsersController(IMediator mediator) {
+            _commandBus = new CommandBus(mediator);
+            _queryBus = new QueryBus(mediator);
         }
         // GET: api/users/
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            List<User> user = await _queryBus.Query<GetAllUsersQuery, List<User>>(new GetAllUsersQuery());
+            List<User> user = await _queryBus.Query(new GetAllUsersQuery());
             return Ok(user);
         }
 
@@ -35,7 +35,7 @@ namespace UserService.Controllers
         [HttpGet("{Id}", Name = "GetUserById")]
         public async Task<IActionResult> GetUserById(string id)
         {
-            var users =  await _queryBus.Query<GetUserByIDQuery, User>(new GetUserByIDQuery() { Id = id }); ;
+            var users =  await _queryBus.Query(new GetUserByIDQuery() { Id = id }); ;
             //string id = new Guid().ToString();
             //var users = await _dbContext.DataSet.FirstOrDefaultAsync(x => x.Id == id);
             return Ok(users);
@@ -50,14 +50,19 @@ namespace UserService.Controllers
                 if (ModelState.IsValid)
                 {
                     // send command
-                    await _commandBus.Send(command);
+                    CommandResult result = await _commandBus.Send(command);
+                    if (!result.Ok)
+                    {
+                        Failed failure = (Failed) result;
+                        return StatusCode((int)failure.ResponseCode, failure.Reasons);
+                    }
 
                     // send events
                     // send confirmation email
                     // 
 
                     // return result
-                    return Ok(new {status = Action.ConfirmationSent.ToString()});
+                   
                 }
             }
             catch (DbUpdateException)
@@ -85,7 +90,7 @@ namespace UserService.Controllers
                     //RabbitMQ goes here
 
                     // return result
-                    return Ok(new {status = Action.ConfirmationSent.ToString()});
+                    return Ok();
                 }
             }
             catch (DbUpdateException)
@@ -102,7 +107,8 @@ namespace UserService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromBody]DeleteUserCommand command)
         {
-            return await _commandBus.Send(command);
+             var result = await _commandBus.Send(command);
+             return Ok();
         }
     }
 }

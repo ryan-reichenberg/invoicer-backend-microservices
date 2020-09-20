@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Invoicer.Common;
 using Invoicer.Common.Handlers;
@@ -15,7 +16,7 @@ namespace UserService.Commands.Handlers
         }
 
 
-        public async Task<CommandResult> Handle(DeleteUserCommand command)
+        public async Task<CommandResult> Handle(DeleteUserCommand command, CancellationToken token)
         {
             throw new NotImplementedException();
         }

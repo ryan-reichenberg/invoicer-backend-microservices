@@ -9,13 +9,13 @@ namespace UserService.Mappers
 
         public static User MapToUser(this UserCommand command) => new User
         {
-            Id = command.Id != null ? command.Id : Guid.NewGuid().ToString(),
-            Name = command.Name,
-            StreetAddress =  command.Address.StreetAddress,
-            City = command.Address.City,
-            PostalCode = command.Address.PostalCode,
-            MobileNumber = command.MobileNumber,
-            EmailAddress = command.EmailAddress
+            Id = command.Id ?? Guid.NewGuid().ToString(),
+            Name = command.Name ?? "",
+            StreetAddress =  command.Address?.StreetAddress ?? "",
+            City = command.Address?.City ?? "",
+            PostalCode = command.Address?.PostalCode ?? "",
+            MobileNumber = command.MobileNumber ?? "",
+            EmailAddress = command.EmailAddress ?? ""
         };
     }
 }

@@ -5,17 +5,15 @@ services:
     container_name: rabbitmqserver
     hostname: 'rabbit-mq-host'
     volumes:
-      - "$PWD/.docker/rabbitmq/etc/:/etc/rabbitmq/"
-      - "$PWD/.docker/rabbitmq/data/:/var/lib/rabbitmq/"
-      - "$PWD/.docker/rabbitmq/logs/:/var/log/rabbitmq/"
+      - "./.docker/rabbitmq/etc/:/etc/rabbitmq/"
+      - "./.docker/rabbitmq/data/:/var/lib/rabbitmq/"
+      - "./.docker/rabbitmq/logs/:/var/log/rabbitmq/"
     ports:
       - 5672:5672
       - 15672:15672
   sqlserver:
     image: microsoft/mssql-server-linux:latest
     container_name: sqlserver
-    volumes:
-      - $PWD/.docker/sqlserver/data:/var/opt/mssql 
     ports:
       - "1434:1433"
     environment:

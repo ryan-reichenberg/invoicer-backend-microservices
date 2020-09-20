@@ -1,7 +1,5 @@
 using System;
-using System.Reflection;
-using Autofac;
-using Invoicer.Common;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +22,7 @@ namespace UserService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(typeof(Startup));
             services.AddDbContext<UserDbContext>(options => 
                 options.UseSqlServer(_configuration.GetConnectionString("UserManagementCN")));
             services.AddMvc(options => options.EnableEndpointRouting = false)
@@ -46,9 +45,6 @@ namespace UserService
                 scope.ServiceProvider.GetService<UserDbContext>().MigrateDB();
             }
         }
-
-        public void ConfigureContainer(ContainerBuilder containerBuilder) {
-            containerBuilder.RegisterModule(new InitializeModule() { assembly = Assembly.GetExecutingAssembly()});
-        }
+        
     }
 }

@@ -7,6 +7,7 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+    <Folder Include="Models\Entities" />
     <Folder Include="Repositories\" />
     <Folder Include="Commands\" />
     <Folder Include="Mappers\" />
@@ -14,20 +15,18 @@
     <Folder Include="Queries\" />
     <Folder Include="Queries\Handlers\" />
     <Folder Include="Models\ValueObjects\" />
-    <Folder Include="Models\Entities\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="InvoiceCommonLib" Version="1.0.0-alpha" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
     <PackageReference Include="Polly" Version="7.2.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-rc.1.20451.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0-rc.1.20451.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0-rc.1.20451.13">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Migrations\20200223104349_InitialCreate.Designer.cs" />
@@ -38,6 +37,6 @@
     <Content Remove="nuget.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Projects\Invoicer.Common\src\Invoicer.Common\Invoicer.Common.csproj" />
+    <ProjectReference Include="..\..\..\Invoicer.Common\src\Invoicer.Common\Invoicer.Common.csproj" />
   </ItemGroup>
 </Project>

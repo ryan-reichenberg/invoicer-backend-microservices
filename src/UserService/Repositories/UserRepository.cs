@@ -13,10 +13,9 @@ namespace UserService.Repositories
     {
         private readonly UserDbContext _dbContext;
         private readonly ILogger _logger;
-        public UserRepository(UserDbContext dbContext, ILogger logger)
+        public UserRepository(UserDbContext dbContext)
         {
             _dbContext = dbContext;
-            _logger = logger;
         }
 
         public async Task<User> DeleteAsync(string id)

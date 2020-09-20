@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Invoicer.Common;
 using Invoicer.Common.Handlers;
@@ -16,7 +17,7 @@ namespace UserService.Queries.Handlers
             _repository = repository;
         }
 
-        public Task<List<User>> Handle(GetAllUsersQuery query)
+        public Task<List<User>> Handle(GetAllUsersQuery query, CancellationToken token)
         {
             return _repository.FindAllAsync();
         }

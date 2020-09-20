@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Invoicer.Common.Handlers;
 using UserService.Models;
@@ -14,7 +15,7 @@ namespace UserService.Queries.Handlers
             _repository = repository;
         }
         
-        public Task<User> Handle(GetUserByIDQuery query)
+        public Task<User> Handle(GetUserByIDQuery query, CancellationToken token)
         {
             return _repository.FindByIdAsync(new Guid().ToString());
         }
