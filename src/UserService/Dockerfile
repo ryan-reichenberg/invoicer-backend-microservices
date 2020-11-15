@@ -1,22 +1,9 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 # Copy necessary files and restore as distinct layer
-COPY *.sln .
-COPY UserService/*.csproj ./UserService/
-COPY InvoicingService/*.csproj ./InvoicingService/
-COPY LoggingService/*.csproj ./LoggingService/
-COPY AuthenticationService/*.csproj ./AuthenticationService/
-COPY APIGateway/*.csproj ./APIGateway/
-COPY PaymentService/*.csproj ./PaymentService/
-COPY NotificationService/*.csproj ./NotificationService/
-COPY Invoicer.Common/*.csproj ./Invoicer.Common/
-COPY Invoicer.Common.Tests/*.csproj ./Invoicer.Common.Tests/
+COPY ./ ./
 
 RUN dotnet restore
-
-# copy everything else and build app
-COPY UserService/. ./UserService/
-COPY Invoicer.Common/. ./Invoicer.Common/
 
 WORKDIR /app/UserService
 
