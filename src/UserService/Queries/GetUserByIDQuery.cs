@@ -4,10 +4,10 @@ using UserService.Models;
 
 namespace UserService.Queries
 {
-    public class GetUserByIDQuery : IQuery<User>
+    public class GetUserByIdQuery : IQuery<User>
     {
         public string Id { get; set; }
-        public GetUserByIDQuery()
+        public GetUserByIdQuery()
         {
         }
     }

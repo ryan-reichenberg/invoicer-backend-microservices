@@ -22,7 +22,9 @@ services:
       - SA_PASSWORD=tSlY4ETLAZ
   userservice:
     container_name: user_service
-    build: UserService
+    build: 
+      context: ./
+      dockerfile: UserService/Dockerfile
     depends_on:
       - sqlserver
       - rabbitmqserver

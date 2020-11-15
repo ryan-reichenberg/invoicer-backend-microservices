@@ -7,7 +7,7 @@ using UserService.Repositories;
 
 namespace UserService.Queries.Handlers
 {
-    public class GetUserByIDQueryHandler : IQueryHandler<GetUserByIDQuery, User>
+    public class GetUserByIDQueryHandler : IQueryHandler<GetUserByIdQuery, User>
     {
         private IUserRepository _repository;
         public GetUserByIDQueryHandler(IUserRepository repository)
@@ -15,7 +15,7 @@ namespace UserService.Queries.Handlers
             _repository = repository;
         }
         
-        public Task<User> Handle(GetUserByIDQuery query, CancellationToken token)
+        public Task<User> Handle(GetUserByIdQuery query, CancellationToken token)
         {
             return _repository.FindByIdAsync(new Guid().ToString());
         }

@@ -35,7 +35,7 @@ namespace UserService.Controllers
         [HttpGet("{Id}", Name = "GetUserById")]
         public async Task<IActionResult> GetUserById(string id)
         {
-            var users =  await _queryBus.Query(new GetUserByIDQuery() { Id = id }); ;
+            var users =  await _queryBus.Query(new GetUserByIdQuery() { Id = id }); ;
             //string id = new Guid().ToString();
             //var users = await _dbContext.DataSet.FirstOrDefaultAsync(x => x.Id == id);
             return Ok(users);

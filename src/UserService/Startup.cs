@@ -22,6 +22,7 @@ namespace UserService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddMediatR(typeof(Startup));
             services.AddDbContext<UserDbContext>(options => 
                 options.UseSqlServer(_configuration.GetConnectionString("UserManagementCN")));

@@ -37,6 +37,6 @@
     <Content Remove="nuget.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Invoicer.Common\src\Invoicer.Common\Invoicer.Common.csproj" />
+    <ProjectReference Include="..\Invoicer.Common\Invoicer.Common.csproj" />
   </ItemGroup>
 </Project>
