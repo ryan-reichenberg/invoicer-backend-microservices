@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Invoicer.Common;
@@ -20,11 +21,29 @@ namespace UserService.Commands.Handlers
 
 
         public async Task<CommandResult> Handle(RegisterUserCommand command, CancellationToken token)
-        {
-            Console.WriteLine(command.MapToUser());
-            return CommandResult.Failure(HttpStatusCode.NotFound, "No new details to update", "message 2");
-            // if (user == null) CommandResult.Failure(HttpStatusCode.NotModified, "No new details to update");
-            // return CommandResult.Success();
+        {    
+            Console.WriteLine("Called command");
+            User user = command.MapToUser();
+            Type type = typeof(User);
+            foreach (PropertyInfo property in type.GetProperties())
+            {
+                if (String.IsNullOrEmpty(property.GetValue(user)?.ToString()))
+                {
+                    return CommandResult.Failure(HttpStatusCode.UnprocessableEntity, $"Property: '{property.Name}' cannot be processed.");
+                }
+            }
+
+            try
+            {
+                var result = await _repository.SaveAsync(user);
+                Console.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                return CommandResult.Failure(HttpStatusCode.InternalServerError, "Something went wrong saving the user to the db.");
+            }
+
+            return CommandResult.Success();
         }
     }
 }

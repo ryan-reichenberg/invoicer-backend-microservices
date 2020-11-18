@@ -13,9 +13,10 @@ namespace UserService.Repositories
     {
         private readonly UserDbContext _dbContext;
         private readonly ILogger _logger;
-        public UserRepository(UserDbContext dbContext)
+        public UserRepository(UserDbContext dbContext, ILogger<UserRepository> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<User> DeleteAsync(string id)
@@ -23,7 +24,7 @@ namespace UserService.Repositories
             var user = await FindByIdAsync(id) ?? throw new NullReferenceException($"Cannot find user with id: {id}");
             _dbContext.DataSet.Remove(user);
             await _dbContext.SaveChangesAsync();
-            return user;
+            return null;
 
         }
 
@@ -67,19 +68,22 @@ namespace UserService.Repositories
 
         public async Task<User> SaveAsync(User entity)
         {
+            // TODO: Is this really needed? Can a new registered entity have a ID
+            // Can save some time here too.
             var user = await FindByIdAsync(entity.Id);
             if (user == null)
             {
-                await _dbContext.DataSet.AddAsync(entity);
+                _dbContext.DataSet.Add(entity);
                 await _dbContext.SaveChangesAsync();
                 user = entity;
+                _logger.LogInformation(entity.Id);
             }
             else
             {
                 _logger.LogDebug($"User[{entity}] already exists");
                 user = null;
             }
-
+            _logger.LogInformation($"Successfully saved user: {user}");
             return user;
         }
 

@@ -1,13 +1,11 @@
 ﻿using System;
-using Invoicer.Common.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Polly;
 using UserService.Models;
 
 namespace UserService.Repositories
 {
-    public class UserDbContext : DbContext, IDbContext<User>
+    public class UserDbContext : DbContext
     {
         public DbSet<User> DataSet { get; set; }
 

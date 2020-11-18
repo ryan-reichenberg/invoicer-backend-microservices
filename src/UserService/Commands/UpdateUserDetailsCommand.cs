@@ -6,12 +6,14 @@ namespace UserService.Commands
 {
     public class UpdateUserDetailsCommand : UserCommand
     {
-        public readonly string Id;
-        public readonly UserUpdateDetails UpdateDetais;
-        public UpdateUserDetailsCommand(string id, UserUpdateDetails updateDetails)
+        private readonly string Id;
+        public UpdateUserDetailsCommand(string id, string name, string mobileNumber, string emailAddress, Address address)
         {
             Id = id;
-            UpdateDetais = updateDetails;
+            Name = name;
+            Address = address;
+            MobileNumber = mobileNumber;
+            EmailAddress = emailAddress;
         }
     }
 }

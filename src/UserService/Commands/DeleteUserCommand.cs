@@ -3,10 +3,13 @@ using Invoicer.Common;
 
 namespace UserService.Commands
 {
-    public class DeleteUserCommand : UserCommand
+    public class DeleteUserCommand : ICommand
     {
-        public DeleteUserCommand()
+        public string Id { get; private set; }
+
+        public DeleteUserCommand(string id)
         {
+            Id = id;
         }
         
     }

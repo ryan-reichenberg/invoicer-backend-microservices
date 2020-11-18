@@ -21,8 +21,14 @@ namespace UserService.Commands.Handlers
 
         public async Task<CommandResult> Handle(UpdateUserDetailsCommand command, CancellationToken token)
         {
-            User user =  await _repository.SaveAsync(command.MapToUser());
-            if (user == null) CommandResult.Failure(HttpStatusCode.NotModified, "No new details to update");
+            try {
+                User user = await _repository.SaveAsync(command.MapToUser());
+                if (user == null) CommandResult.Failure(HttpStatusCode.NotModified, "No new details to update");
+            }
+            catch (Exception e)
+            {
+                return CommandResult.Failure(HttpStatusCode.InternalServerError, "Something went wrong saving the user to the db.");
+            }
             return CommandResult.Success();
         }
     }

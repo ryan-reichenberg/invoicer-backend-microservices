@@ -15,7 +15,8 @@ namespace UserService.Models
 
         public override string ToString()
         {
-            return base.ToString();
+            return
+                $"User[Id={Id}, Name={Name}, StreetAddresss={StreetAddress}, PostalCode={PostalCode}, City={City}, MobileNumber={MobileNumber}, EmailAdress={EmailAddress}, Deactivated={Deactivated}]";
         }
     }
 }

@@ -23,7 +23,7 @@ namespace UserService.Controllers
             _commandBus = new CommandBus(mediator);
             _queryBus = new QueryBus(mediator);
         }
-        // GET: api/users/
+        // GET: api/users
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -31,17 +31,16 @@ namespace UserService.Controllers
             return Ok(user);
         }
 
-        // GET api/users/5
+        // GET api/users/{guid}
         [HttpGet("{Id}", Name = "GetUserById")]
         public async Task<IActionResult> GetUserById(string id)
         {
-            var users =  await _queryBus.Query(new GetUserByIdQuery() { Id = id }); ;
-            //string id = new Guid().ToString();
-            //var users = await _dbContext.DataSet.FirstOrDefaultAsync(x => x.Id == id);
-            return Ok(users);
+            var user =  await _queryBus.Query(new GetUserByIdQuery() { Id = id }); ;
+            if (user == null) return NotFound();
+            return Ok(user);
         }
 
-        // POST api/values
+        // POST api/users
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]RegisterUserCommand command)
         {
@@ -58,24 +57,25 @@ namespace UserService.Controllers
                     }
 
                     // send events
-                    // send confirmation email
+                    // e.g. confirmation email
                     // 
 
                     // return result
-                   
+                    return Ok();
+
                 }
             }
             catch (DbUpdateException)
             {
                 ModelState.AddModelError("", "Unable to persist changes. " +
                     "Try again, and if the problem persists " +
-                    "please, see your system administrator.");
+                    "Please see your system administrator.");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
             return BadRequest();
         }
 
-        // PUT api/values/5
+        // PUT api/users/{guid}
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]UpdateUserDetailsCommand command)
         {
@@ -86,8 +86,7 @@ namespace UserService.Controllers
                     // send command
                    await _commandBus.Send(command);
 
-                    // send event
-                    //RabbitMQ goes here
+                    // send event(s)
 
                     // return result
                     return Ok();
@@ -103,7 +102,7 @@ namespace UserService.Controllers
             return BadRequest();
         }
 
-        // DELETE api/values/5
+        // DELETE api/users/{guid}
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromBody]DeleteUserCommand command)
         {

@@ -17,7 +17,7 @@ namespace UserService.Queries.Handlers
         
         public Task<User> Handle(GetUserByIdQuery query, CancellationToken token)
         {
-            return _repository.FindByIdAsync(new Guid().ToString());
+            return _repository.FindByIdAsync(query.Id);
         }
     }
 }
