@@ -53,7 +53,7 @@ namespace UserService.Repositories
                 Type type = typeof(User);
                 foreach (PropertyInfo property in type.GetProperties())
                 {
-                    if (property.GetValue(user) != property.GetValue(entity))
+                    if (!String.Equals(property.GetValue(user)?.ToString(), property.GetValue(entity)?.ToString()))
                     {
                         property.SetValue(user, property.GetValue(entity));
                     }
@@ -76,7 +76,6 @@ namespace UserService.Repositories
                 _dbContext.DataSet.Add(entity);
                 await _dbContext.SaveChangesAsync();
                 user = entity;
-                _logger.LogInformation(entity.Id);
             }
             else
             {

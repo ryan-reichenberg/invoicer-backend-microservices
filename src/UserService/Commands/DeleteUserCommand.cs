@@ -5,11 +5,10 @@ namespace UserService.Commands
 {
     public class DeleteUserCommand : ICommand
     {
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
-        public DeleteUserCommand(string id)
+        public DeleteUserCommand()
         {
-            Id = id;
         }
         
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Invoicer.Common
+namespace Invoicer.Common.Busses
 {
     public interface ICommandBus
     {

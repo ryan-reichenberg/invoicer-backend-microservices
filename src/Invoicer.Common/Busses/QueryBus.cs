@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 
-namespace Invoicer.Common
+namespace Invoicer.Common.Busses
 {
     public class QueryBus : IQueryBus
     {

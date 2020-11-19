@@ -21,8 +21,7 @@ namespace UserService.Commands.Handlers
 
 
         public async Task<CommandResult> Handle(RegisterUserCommand command, CancellationToken token)
-        {    
-            Console.WriteLine("Called command");
+        {
             User user = command.MapToUser();
             Type type = typeof(User);
             foreach (PropertyInfo property in type.GetProperties())
@@ -36,7 +35,6 @@ namespace UserService.Commands.Handlers
             try
             {
                 var result = await _repository.SaveAsync(user);
-                Console.WriteLine(result);
             }
             catch (Exception e)
             {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Invoicer.Common.Exceptions;
+using Invoicer.Common.Busses;
 using Invoicer.Common.Handlers;
 using MediatR;
 using StructureMap;

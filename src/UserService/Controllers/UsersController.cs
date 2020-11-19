@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Invoicer.Common;
+using Invoicer.Common.Busses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ using UserService.Commands;
 using UserService.Models;
 using UserService.Queries;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+// TODO: Is this code duplication bad?
 
 namespace UserService.Controllers
 {
@@ -57,8 +58,6 @@ namespace UserService.Controllers
                     }
 
                     // send events
-                    // e.g. confirmation email
-                    // 
 
                     // return result
                     return Ok();
@@ -77,14 +76,20 @@ namespace UserService.Controllers
 
         // PUT api/users/{guid}
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody]UpdateUserDetailsCommand command)
+        public async Task<IActionResult> Put(string id, [FromBody]UpdateUserDetailsCommand command)
         {
             try
             {
+                command.Id = id;
                 if (ModelState.IsValid)
                 {
                     // send command
-                   await _commandBus.Send(command);
+                   var result = await _commandBus.Send(command);
+                   if (!result.Ok)
+                   {
+                       Failed failure = (Failed) result;
+                       return StatusCode((int)failure.ResponseCode, failure.Reasons);
+                   }
 
                     // send event(s)
 
@@ -104,10 +109,18 @@ namespace UserService.Controllers
 
         // DELETE api/users/{guid}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromBody]DeleteUserCommand command)
+        public async Task<IActionResult> Delete(string id, [FromBody]DeleteUserCommand command)
         {
-             var result = await _commandBus.Send(command);
-             return Ok();
+            if (ModelState.IsValid)
+            {
+                // Gross
+                command.Id = id;
+                var result = await _commandBus.Send(command);
+                // send events -- Important
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }

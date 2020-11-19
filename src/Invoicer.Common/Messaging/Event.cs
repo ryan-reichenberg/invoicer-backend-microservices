@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Invoicer.Common
+namespace Invoicer.Common.Messaging
 {
     public class Event: Message
     {
