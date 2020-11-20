@@ -1,7 +1,7 @@
 ﻿namespace Invoicer.Common.Utils
 {
-    public class Constants
+    public static class Constants
     {
-        public const int RABBIT_MQ_DEFAULT_PORT = 5672;
+        public const int RabbitMqDefaultPort = 5672;
     }
 }

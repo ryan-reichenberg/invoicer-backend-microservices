@@ -1,4 +1,5 @@
 using System;
+using Invoicer.Common.Messaging;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +23,8 @@ namespace UserService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // We only need publisher here
+            services.UserRabbitMqPublisher(_configuration);
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddMediatR(typeof(Startup));
             services.AddDbContext<UserDbContext>(options => 

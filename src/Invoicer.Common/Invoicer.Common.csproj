@@ -16,8 +16,4 @@
     <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
     <PackageReference Include="StructureMap" Version="4.7.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Modules" />
-  </ItemGroup>
 </Project>

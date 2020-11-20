@@ -50,8 +50,7 @@ namespace UserService.Repositories
             }
             else
             {
-                Type type = typeof(User);
-                foreach (PropertyInfo property in type.GetProperties())
+                foreach (PropertyInfo property in typeof(User).GetProperties())
                 {
                     if (!String.Equals(property.GetValue(user)?.ToString(), property.GetValue(entity)?.ToString()))
                     {

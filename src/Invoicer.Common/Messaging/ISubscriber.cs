@@ -1,8 +1,10 @@
-﻿namespace Invoicer.Common.Messaging
+﻿using RabbitMQ.Client;
+
+namespace Invoicer.Common.Messaging
 {
     public interface ISubscriber
     {
-        void Start();
+        void Start(ISubscriberCallback callback);
         void Stop();
     }
 }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Invoicer.Common;
 using Invoicer.Common.Busses;
+using Invoicer.Common.Messaging;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,16 +20,18 @@ namespace UserService.Controllers
     {
         private readonly ICommandBus _commandBus;
         private readonly IQueryBus _queryBus;
-        public UsersController(IMediator mediator) {
+        private readonly IPublisher _publisher;
+        public UsersController(IMediator mediator, IPublisher publisher) {
             _commandBus = new CommandBus(mediator);
             _queryBus = new QueryBus(mediator);
+            _publisher = publisher;
         }
         // GET: api/users
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
             List<User> user = await _queryBus.Query(new GetAllUsersQuery());
-            return Ok(user);
+            return Ok();
         }
 
         // GET api/users/{guid}
@@ -58,7 +60,7 @@ namespace UserService.Controllers
                     }
 
                     // send events
-
+                    await _publisher.PublishMessageAsync("Hello World", "");
                     // return result
                     return Ok();
 

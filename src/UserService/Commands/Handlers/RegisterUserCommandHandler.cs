@@ -23,8 +23,7 @@ namespace UserService.Commands.Handlers
         public async Task<CommandResult> Handle(RegisterUserCommand command, CancellationToken token)
         {
             User user = command.MapToUser();
-            Type type = typeof(User);
-            foreach (PropertyInfo property in type.GetProperties())
+            foreach (PropertyInfo property in typeof(User).GetProperties())
             {
                 if (String.IsNullOrEmpty(property.GetValue(user)?.ToString()))
                 {

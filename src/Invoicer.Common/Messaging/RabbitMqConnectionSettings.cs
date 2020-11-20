@@ -2,7 +2,7 @@
 {
     public class RabbitMqConnectionSettings
     {
-        public string Host { get; set; }
+        public string Host { get; set; } = "localhost";
 
         public string UserName { get; set; }
 
@@ -11,9 +11,5 @@
         public string Exchange { get; set; }
 
         public string Queue { get; set; }
-
-        public string RoutingKey { get; set; }
-
-        public int Port { get; set; }
     }
 }
