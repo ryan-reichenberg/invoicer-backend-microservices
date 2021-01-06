@@ -1,9 +1,6 @@
-﻿using System;
-using MediatR;
-
-namespace Invoicer.Common
+﻿namespace Invoicer.Common
 {
-    public interface ICommand : IRequest<CommandResult>
+    public interface ICommand : IMessage
     {
     }
 }

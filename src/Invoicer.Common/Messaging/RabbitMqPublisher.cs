@@ -18,7 +18,7 @@ namespace Invoicer.Common.Messaging
             ConnectAndConfigure();
         }
 
-        public Task PublishMessageAsync(string message)
+        public Task PublishMessageAsync(string message, String routingKey = "")
         {
             return Task.Run(() =>
             {
@@ -26,7 +26,7 @@ namespace Invoicer.Common.Messaging
                 var body = Encoding.UTF8.GetBytes(message);
                 IBasicProperties properties = _model.CreateBasicProperties();
                 properties.Headers = new Dictionary<string, object> { { "MessageType", "Test" } };
-                _model.BasicPublish(_settings.Exchange, "", properties, body);
+                _model.BasicPublish(_settings.Exchange, routingKey, properties, body);
             });
 
 

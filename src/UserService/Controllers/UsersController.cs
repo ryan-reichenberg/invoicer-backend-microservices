@@ -11,19 +11,13 @@ using UserService.Commands;
 using UserService.Models;
 using UserService.Queries;
 
-// TODO: Is this code duplication bad?
-
 namespace UserService.Controllers
 {
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        private readonly ICommandBus _commandBus;
-        private readonly IQueryBus _queryBus;
         private readonly IPublisher _publisher;
         public UsersController(IMediator mediator, IPublisher publisher) {
-            _commandBus = new CommandBus(mediator);
-            _queryBus = new QueryBus(mediator);
             _publisher = publisher;
         }
         // GET: api/users

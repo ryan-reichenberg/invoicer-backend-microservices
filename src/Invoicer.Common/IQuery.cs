@@ -1,9 +1,10 @@
-﻿using System;
-using MediatR;
-
-namespace Invoicer.Common
+﻿namespace Invoicer.Common
 {
-    public interface IQuery<out TResponse> : IRequest<TResponse>
+    public interface IQuery
+    {
+    }
+
+    public interface IQuery<T> : IQuery
     {
     }
 }

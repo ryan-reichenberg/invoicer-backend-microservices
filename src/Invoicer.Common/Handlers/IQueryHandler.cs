@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using MediatR;
+﻿using System.Threading.Tasks;
 
 namespace Invoicer.Common.Handlers
 {
-    public interface IQueryHandler<in TRequest, TResponse> : IRequestHandler<TRequest, TResponse> where TRequest : IQuery<TResponse>
+    public interface IQueryHandler<in TQuery,TResult> where TQuery : class, IQuery<TResult>
     {
+        Task<TResult> HandleAsync(TQuery query);
     }
 }
