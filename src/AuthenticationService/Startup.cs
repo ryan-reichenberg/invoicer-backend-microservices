@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AuthenticationService.Extensions;
+using Invoicer.Common.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,7 +28,10 @@ namespace AuthenticationService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddInvoicerCommon();
             services.AddJwt();
+            services.AddRabbitMq();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,7 +41,8 @@ namespace AuthenticationService
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.RunInitializers();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

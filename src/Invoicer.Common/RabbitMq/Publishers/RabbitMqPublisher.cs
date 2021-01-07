@@ -4,7 +4,7 @@ using Invoicer.Common.RabbitMq.Conventions;
 
 namespace Invoicer.Common.RabbitMq.Publishers
 {
-    public class RabbitMqPublisher
+    public class RabbitMqPublisher:  IBusPublisher
     {
         private readonly IRabbitMqClient _client;
         private readonly IConventionsProvider _conventionsProvider;
