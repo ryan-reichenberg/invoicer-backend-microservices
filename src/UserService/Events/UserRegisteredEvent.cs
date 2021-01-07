@@ -1,8 +1,8 @@
-﻿using Invoicer.Common.Messaging;
+﻿using Invoicer.Common;
 
 namespace UserService.Events
 {
-    public class UserRegisteredEvent : Event
+    public class UserRegisteredEvent : IEvent
     {
         
     }

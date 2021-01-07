@@ -14,8 +14,8 @@ namespace UserService.Queries.Handlers
         {
             _repository = repository;
         }
-        
-        public Task<User> Handle(GetUserByIdQuery query, CancellationToken token)
+
+        public  Task<User> HandleAsync(GetUserByIdQuery query)
         {
             return _repository.FindByIdAsync(query.Id);
         }

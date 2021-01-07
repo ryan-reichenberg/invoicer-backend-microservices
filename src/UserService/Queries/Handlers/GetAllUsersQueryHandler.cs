@@ -17,7 +17,7 @@ namespace UserService.Queries.Handlers
             _repository = repository;
         }
 
-        public Task<List<User>> Handle(GetAllUsersQuery query, CancellationToken token)
+        public Task<List<User>> HandleAsync(GetAllUsersQuery query)
         {
             return _repository.FindAllAsync();
         }
