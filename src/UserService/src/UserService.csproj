@@ -16,15 +16,12 @@
     <Folder Include="Models\ValueObjects\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="4.3.1" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.12" />
     <PackageReference Include="Polly" Version="7.2.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-rc.1.20451.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0-rc.1.20451.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0-rc.1.20451.13">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Migrations\20200223104349_InitialCreate.Designer.cs" />
@@ -35,9 +32,7 @@
     <Content Remove="nuget.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Invoicer.Common\Invoicer.Common.csproj" />
     <ProjectReference Include="..\..\Invoicer.Common\src\Invoicer.Common.csproj" />
-    <ProjectReference Include="..\Invoicer.Common\Invoicer.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="TestProject1\obj\project.assets.json" />

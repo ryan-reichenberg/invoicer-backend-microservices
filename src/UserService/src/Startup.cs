@@ -26,8 +26,10 @@ namespace UserService
         {
             // We only need publisher here
             services.AddInvoicerCommon()
+                .AddCqrs()
                 .AddWebApi()
-                .AddRabbitMq()
+                .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
+                .AddJaeger()
                 .Initialize();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddDbContext<UserDbContext>(options =>
@@ -47,6 +49,7 @@ namespace UserService
                 .SubscribeEvent<UserRegisteredEvent>();
 
             app.UseRouting();
+            app.UseJaeger();
 
             app.UseAuthentication();
 

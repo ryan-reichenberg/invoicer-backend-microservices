@@ -20,6 +20,8 @@ services:
       - ACCEPT_EULA=Y 
       - MSSQL_PID=Developer
       - SA_PASSWORD=tSlY4ETLAZ
+    volumes:
+      - sqlserver:/var/opt/mssql/data
   mongodb:
     image: mongo:latest
     environment:
@@ -27,15 +29,34 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     ports:
       - 27017:27017
-  userservice:
-    container_name: user_service
-    build: 
-      context: ./
-      dockerfile: UserService/Dockerfile
-    depends_on:
-      - sqlserver
-      - rabbitmqserver
+    volumes:
+      - mongodb:/data/db
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: jaeger
+    restart: unless-stopped
     ports:
-      - "5100:5100"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - 5775:5775/udp
+      - 5778:5778
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 9411:9411
+      - 14268:14268
+      - 16686:16686
+#  userservice:
+#    container_name: user_service
+#    build: 
+#      context: ./
+#      dockerfile: UserService/Dockerfile
+#    depends_on:
+#      - sqlserver
+#      - rabbitmqserver
+#    ports:
+#      - "5100:5100"
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Production
+volumes:
+  mongodb:
+    driver: local
+  sqlserver:
+    driver: local

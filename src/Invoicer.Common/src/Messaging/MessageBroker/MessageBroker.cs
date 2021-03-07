@@ -49,7 +49,6 @@ namespace Invoicer.Common.Messaging.MessageBroker
             }
 
             var messageProperties = _messagePropertiesAccessor.MessageProperties;
-            var originatedMessageId = messageProperties?.MessageId;
             var correlationId = messageProperties?.CorrelationId;
             var spanContext = messageProperties?.GetSpanContext(_spanContextHeader);
             if (string.IsNullOrWhiteSpace(spanContext))

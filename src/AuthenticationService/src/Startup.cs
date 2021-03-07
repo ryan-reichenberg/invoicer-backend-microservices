@@ -42,7 +42,8 @@ namespace AuthenticationService
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddInvoicerCommon()
                 .AddWebApi()
-                .AddRabbitMq()
+                .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
+                .AddJaeger()
                 .AddJwt()
                 .AddMongo()
                 .AddMongoRepository<RefreshTokenDocument, Guid>("refreshTokens")
@@ -60,6 +61,7 @@ namespace AuthenticationService
 
             app.RunInitializers();
             app.UseHttpsRedirection();
+            app.UseJaeger();
 
             app.UseRouting();
 
@@ -69,7 +71,7 @@ namespace AuthenticationService
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Authentication Service API v");
+                    await context.Response.WriteAsync("Authentication Service API v1.0");
                 });
                 endpoints.MapControllers();
             });

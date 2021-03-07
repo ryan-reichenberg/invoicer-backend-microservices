@@ -6,6 +6,5 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\Invoicer.Common\src\Invoicer.Common.csproj" />
-    <ProjectReference Include="..\Invoicer.Common\Invoicer.Common.csproj" />
   </ItemGroup>
 </Project>

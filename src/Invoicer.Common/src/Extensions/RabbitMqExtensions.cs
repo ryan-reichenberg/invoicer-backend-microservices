@@ -4,6 +4,8 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Invoicer.Common.Handlers;
+using Invoicer.Common.Jaeger.Plugins;
+using Invoicer.Common.Messaging.MessageBroker;
 using Invoicer.Common.RabbitMq;
 using Invoicer.Common.RabbitMq.Contexts;
 using Invoicer.Common.RabbitMq.Conventions;
@@ -59,6 +61,7 @@ namespace Invoicer.Common.Extensions
             container.Services.AddSingleton<IRabbitMqSerializer, RabbitMqSerializer>();
             container.Services.AddSingleton<IRabbitMqClient, RabbitMqClient>();
             container.Services.AddSingleton<IBusPublisher, RabbitMqPublisher>();
+            container.Services.AddSingleton<IMessageBroker, MessageBroker>();
             container.Services.AddSingleton<IBusSubscriber, RabbitMqSubscriber>();
             container.Services.AddTransient<RabbitMqExchangeInitializer>();
             container.Services.AddHostedService<RabbitMqHostedService>();
@@ -199,5 +202,11 @@ namespace Invoicer.Common.Extensions
                 using var scope = serviceProvider.CreateScope();
                 await scope.ServiceProvider.GetRequiredService<IEventHandler<T>>().HandleAsync(@event);
             });
+        
+        public static IRabbitMqPluginsRegistry AddJaegerRabbitMqPlugin(this IRabbitMqPluginsRegistry registry)
+        {
+            registry.Add<RabbitMQJaegerPlugin>();
+            return registry;
+        }
     }
 }
