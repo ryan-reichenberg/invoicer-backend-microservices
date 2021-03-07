@@ -20,6 +20,13 @@ services:
       - ACCEPT_EULA=Y 
       - MSSQL_PID=Developer
       - SA_PASSWORD=tSlY4ETLAZ
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27017:27017
   userservice:
     container_name: user_service
     build: 
