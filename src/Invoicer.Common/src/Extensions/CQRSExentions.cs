@@ -24,9 +24,20 @@ namespace Invoicer.Common.Extensions
                         .WithoutAttribute(typeof(DecoratorAttribute)))
                     .AsImplementedInterfaces()
                     .WithTransientLifetime());
-            container.Services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
             return container;
 
+        }
+
+        public static IInitializationContainer AddInMemoryQueryDispatcher(this IInitializationContainer container)
+        {
+            container.Services.AddSingleton<IQueryDispatcher, QueryDispatcher>();
+            return container;
+        }
+
+        public static IInitializationContainer AddInMemoryCommandDispatcher(this IInitializationContainer container)
+        {
+            container.Services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
+            return container;
         }
     }
 }

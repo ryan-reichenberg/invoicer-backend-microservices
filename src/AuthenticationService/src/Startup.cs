@@ -61,7 +61,7 @@ namespace AuthenticationService
 
             app.RunInitializers();
             app.UseHttpsRedirection();
-            app.UseJaeger();
+            // app.UseJaeger();
 
             app.UseRouting();
 

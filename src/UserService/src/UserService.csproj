@@ -6,14 +6,9 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+    <Folder Include="DTO\" />
+    <Folder Include="Messages" />
     <Folder Include="Repositories\" />
-    <Folder Include="Commands\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Commands\Handlers\" />
-    <Folder Include="Queries\" />
-    <Folder Include="Queries\Handlers\" />
-    <Folder Include="Models\ValueObjects\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="4.3.1" />

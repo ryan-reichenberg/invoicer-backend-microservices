@@ -1,62 +1,68 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Invoicer.Common.Dispatchers;
-using Invoicer.Common.Extensions;
-using Invoicer.Common.RabbitMq.Publishers;
+using Invoicer.Common.Messaging.MessageBroker;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Commands;
-using UserService.Models;
+using UserService.DTO;
+using UserService.Messages.Commands;
 using UserService.Queries;
 
 namespace UserService.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class UsersController : Controller
     {
-        private readonly IBusPublisher _publisher;
-        private readonly IQueryDispatcher _dispatcher;
+        private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public UsersController(IBusPublisher publisher, IQueryDispatcher dispatcher) {
-            _publisher = publisher;
-            _dispatcher = dispatcher;
+        public UsersController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
+        {
+            _commandDispatcher = commandDispatcher;
+            _queryDispatcher = queryDispatcher;
         }
         // GET: api/users
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            List<User> user = await _dispatcher.QueryAsync(new GetAllUsersQuery());
+            List<UserDto> user = await _queryDispatcher.QueryAsync(new GetAllUsersQuery());
             return Ok();
         }
 
         // GET api/users/{guid}
         [HttpGet("{Id}", Name = "GetUserById")]
-        public async Task<IActionResult> GetUserById(string id)
+        public async Task<IActionResult> GetUserById(Guid id)
         {
-            var user =  await _dispatcher.QueryAsync(new GetUserByIdQuery() { Id = id }); ;
+            var user =  await _queryDispatcher.QueryAsync(new GetUserByIdQuery() { Id = id }); ;
             if (user == null) return NotFound();
             return Ok(user);
         }
 
         // POST api/users
         [HttpPost]
-        public async Task<IActionResult> Post()
+        public async Task<IActionResult> Post(RegisterUserCommand command)
         {
-            await _publisher.SendAsync(new RegisterUserCommand("Ryan", "040304352", "fhgdsjkgfdg", new Address("fdhjsf", "fdsdsa", "dsbgfhjdsa")), null);
-            return Accepted();
+            await _commandDispatcher.SendAsync(command);
+            return Created($"api/users/{command.Id}", null);
         }
 
         // PUT api/users/{guid}
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, UpdateUserDetailsCommand command)
+        public async Task<IActionResult> Put(UpdateUserDetailsCommand command)
         {
+            await _commandDispatcher.SendAsync(command);
             return Ok();
         }
 
         // DELETE api/users/{guid}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id, [FromBody]DeleteUserCommand command)
+        public async Task<IActionResult> Delete(DeleteUserCommand command)
         {
-          return Ok();
+            await _commandDispatcher.SendAsync(command);
+            return Ok();
         }
     }
 }

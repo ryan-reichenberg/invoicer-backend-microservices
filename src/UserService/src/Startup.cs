@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using UserService.Commands;
 using UserService.Events;
+using UserService.Messages.Commands;
 using UserService.Repositories;
 
 namespace UserService
@@ -27,6 +28,8 @@ namespace UserService
             // We only need publisher here
             services.AddInvoicerCommon()
                 .AddCqrs()
+                .AddInMemoryCommandDispatcher()
+                .AddInMemoryQueryDispatcher()
                 .AddWebApi()
                 .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
                 .AddJaeger()
@@ -49,7 +52,6 @@ namespace UserService
                 .SubscribeEvent<UserRegisteredEvent>();
 
             app.UseRouting();
-            app.UseJaeger();
 
             app.UseAuthentication();
 

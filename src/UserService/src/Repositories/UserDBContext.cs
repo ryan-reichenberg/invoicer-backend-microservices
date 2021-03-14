@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Polly;
-using UserService.Models;
+using UserService.DTO;
 
 namespace UserService.Repositories
 {
     public class UserDbContext : DbContext
     {
-        public DbSet<User> DataSet { get; set; }
+        public DbSet<UserDto> DataSet { get; set; }
 
         // Causing problems for migration generation:
         // System.MissingMethodException: No parameterless constructor defined for type 'UserService.Repositories.UserDbContext'.
@@ -17,8 +17,8 @@ namespace UserService.Repositories
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<User>().HasKey(m => m.Id);
-            builder.Entity<User>().ToTable("User");
+            builder.Entity<UserDto>().HasKey(m => m.Id);
+            builder.Entity<UserDto>().ToTable("User");
             base.OnModelCreating(builder);
         }
 
