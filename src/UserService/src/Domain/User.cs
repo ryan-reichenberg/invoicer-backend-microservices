@@ -1,6 +1,6 @@
 ﻿using Invoicer.Common.Types.DDD;
 
-namespace UserService.Entities
+namespace UserService.Domain
 {
     public class User : AggregateRoot
     {

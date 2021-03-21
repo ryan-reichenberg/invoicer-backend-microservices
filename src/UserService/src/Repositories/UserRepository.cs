@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using UserService.Entities;
+using UserService.Domain;
 
 namespace UserService.Repositories
 {

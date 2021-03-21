@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
+using UserService.Domain;
 using UserService.DTO;
-using UserService.Entities;
 
 namespace UserService.Repositories
 {
