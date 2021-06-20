@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Invoicer.Common.Handlers;
 using UserService.DTO;
+using UserService.Queries;
 using UserService.Repositories;
 
-namespace UserService.Queries.Handlers
+namespace UserService.Messages.Queries.Handlers
 {
     public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserDto>
     {

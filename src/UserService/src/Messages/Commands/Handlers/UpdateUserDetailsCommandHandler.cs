@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Invoicer.Common.Handlers;
-using UserService.Messages.Commands;
 using UserService.Repositories;
 
-namespace UserService.Commands.Handlers
+namespace UserService.Messages.Commands.Handlers
 {
     public class UpdateUserDetailsCommandHandler : ICommandHandler<UpdateUserDetailsCommand>
     {

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Net;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using Invoicer.Common;
+﻿using System.Threading.Tasks;
 using Invoicer.Common.Handlers;
 using Invoicer.Common.RabbitMq.Attributes;
 using Microsoft.Extensions.Logging;
-using UserService.Messages.Commands;
 using UserService.Repositories;
 
-namespace UserService.Commands.Handlers
+namespace UserService.Messages.Commands.Handlers
 {
     [Message("users")]
     public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>

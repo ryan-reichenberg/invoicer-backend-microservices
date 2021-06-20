@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Invoicer.Common.Dispatchers;
-using Invoicer.Common.Messaging.MessageBroker;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using UserService.Commands;
 using UserService.DTO;
 using UserService.Messages.Commands;
 using UserService.Queries;
@@ -28,8 +25,8 @@ namespace UserService.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            List<UserDto> user = await _queryDispatcher.QueryAsync(new GetAllUsersQuery());
-            return Ok();
+            List<UserDto> users = await _queryDispatcher.QueryAsync(new GetAllUsersQuery());
+            return Ok(users);
         }
 
         // GET api/users/{guid}
@@ -46,7 +43,7 @@ namespace UserService.Controllers
         public async Task<IActionResult> Post(RegisterUserCommand command)
         {
             await _commandDispatcher.SendAsync(command);
-            return Created($"api/users/{command.Id}", null);
+            return Accepted($"api/users/{command.Id}", null);
         }
 
         // PUT api/users/{guid}
@@ -54,7 +51,7 @@ namespace UserService.Controllers
         public async Task<IActionResult> Put(UpdateUserDetailsCommand command)
         {
             await _commandDispatcher.SendAsync(command);
-            return Ok();
+            return Accepted($"api/users/{command.Id}", null);
         }
 
         // DELETE api/users/{guid}
@@ -62,7 +59,7 @@ namespace UserService.Controllers
         public async Task<IActionResult> Delete(DeleteUserCommand command)
         {
             await _commandDispatcher.SendAsync(command);
-            return Ok();
+            return Accepted();
         }
     }
 }
