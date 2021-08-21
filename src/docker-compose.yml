@@ -5,19 +5,23 @@ services:
     volumes:
       - "./.docker/seq/data:/data"
     ports: 
-      - "80:80"
-      - "5341:5341"
+      - 80:80
+      - 5341:5341
     environment:
       - ACCEPT_EULA=Y
       - SEQ_FIRSTRUN_ADMINPASSWORDHASH=FPatFoASWnx+Y6LVpnNu9ck4Q2Gud1T7ZFW3mrSy4OGIMAiiXg==
   postgres:
-    image: postgres
-    volumes:
-      - "./.docker/postgres/data/:/var/lib/postgresql/data"
+    image: postgres:12
+    hostname: postgres
+    ports:
+      - 5432:5432
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=password
+  adminer:
+    image: adminer
+    hostname: adminer
+    ports:
+      - 8081:8080
   rabbitmqserver:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmqserver
@@ -33,7 +37,7 @@ services:
     image: microsoft/mssql-server-linux:latest
     container_name: sqlserver
     ports:
-      - "1434:1433"
+      - 1434:1433
     environment:
       - ACCEPT_EULA=Y 
       - MSSQL_PID=Developer

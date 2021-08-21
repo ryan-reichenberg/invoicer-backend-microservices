@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Invoicer.Common.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ProjectsService.Repositories;
 
 namespace ProjectsService
 {
@@ -27,10 +30,20 @@ namespace ProjectsService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "ProjectsService", Version = "v1"});
-            });
+            services.AddInvoicerCommon()
+                .AddCqrs()
+                .AddInMemoryCommandDispatcher()
+                .AddInMemoryQueryDispatcher()
+                .AddWebApi()
+                .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
+                .AddJaeger()
+                .Initialize();
+            services.AddScoped<IProjectRepository, ProjectsRepository>();
+            services.AddScoped<ITodoRepository, TodoRepository>();
+            services.AddDbContext<TodoDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("TodoManagementCN")));
+            services.AddDbContext<ProjectDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("ProjectManagementCN")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,15 +52,23 @@ namespace ProjectsService
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProjectsService v1"));
             }
 
             app.UseHttpsRedirection();
 
+            app.RunInitializers();
+            // app.UseRabbitMq()
+            //     .SubscribeCommand<RegisterUserCommand>()
+            //     .SubscribeEvent<UserRegisteredEvent>();
+
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

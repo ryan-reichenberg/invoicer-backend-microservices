@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Invoicer.Common.Types.DDD;
 using OpenTracing.Tag;
+using ProjectsService.Messages.Events.Todos;
 
 namespace ProjectsService.Domain
 {

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Invoicer.Common.Handlers;
 using Invoicer.Common.Messaging.MessageBroker;
@@ -18,9 +19,12 @@ namespace ProjectsService.Messages.Commands.Todos.Handlers
         }
 
         public async Task HandleAsync(ChangeTodoStatusCommand command)
-        { 
-            await _todoRepository.ChangeStatusOfTodo(command.Id, command.TodoStatus);
-            // await _messageBroker.PublishAsync(new TodoStatusTransitionEvent(command.Id, command.TodoStatus));
+        {
+            var todo = await _todoRepository.FindByIdAsync(command.Id);
+            var previousStaus = todo.Status;
+            todo.ChangeTodoStatus(command.TodoStatus);
+            await _todoRepository.UpdateAsync(todo);
+            await _messageBroker.PublishAsync(new TodoStatusTransitionEvent(todo.Id, previousStaus, todo.Status));
 
         }
     }

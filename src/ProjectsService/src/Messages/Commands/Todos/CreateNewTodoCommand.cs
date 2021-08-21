@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Invoicer.Common;
@@ -7,6 +8,7 @@ namespace ProjectsService.Messages.Commands.Todos
 {
     public class CreateNewTodoCommand : ICommand
     {
+        public Guid TodoId { get; set; }
         public string Name { get;  set; }
         public string Description { get;  set; }
         public string ProjectId { get;  set; }
@@ -15,8 +17,9 @@ namespace ProjectsService.Messages.Commands.Todos
         public List<TodoTag> Tags { get;  set; }
     
         [JsonConstructor]
-        public CreateNewTodoCommand( string name, string description, string projectId, TodoStatus status, List<TodoTag> tags)
+        public CreateNewTodoCommand(Guid todoId, string name, string description, string projectId, TodoStatus status, List<TodoTag> tags)
         {
+            TodoId = todoId == Guid.Empty ? Guid.NewGuid() : todoId;
             Name = name;
             Description = description;
             ProjectId = projectId;
