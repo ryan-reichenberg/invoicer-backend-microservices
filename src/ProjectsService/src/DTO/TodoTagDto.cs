@@ -1,12 +1,18 @@
+using System;
+using Invoicer.Common.Types;
+
 namespace ProjectsService.DTO
 {
-    public class TodoTagDto
+    public class TodoTagDto: IIdentifiable<Guid>
     {
-        public string Name { get; private set; }
-        public string Color { get; private set; }
+        public Guid Id { get;   set; }
+        public string Name { get;  set; }
+        public string Color { get;  set; }
+        
 
-        public TodoTagDto(string name, string color)
+        public TodoTagDto(Guid id, string name, string color)
         {
+            Id = id;
             Name = name;
             Color = color;
         }

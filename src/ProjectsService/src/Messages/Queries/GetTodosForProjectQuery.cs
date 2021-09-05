@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using Invoicer.Common;
 using Newtonsoft.Json;
-using ProjectsService.DTO;
+using ProjectsService.Domain;
 
-namespace ProjectsService.Messages.Queries.Todos
+namespace ProjectsService.Messages.Queries
 {
-    public class GetTodosForProjectQuery : IQuery<List<TodoDto>>
+    public class GetTodosForProjectQuery : IQuery<List<Todo>>
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [JsonConstructor]
         public GetTodosForProjectQuery()

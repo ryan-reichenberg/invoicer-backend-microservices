@@ -7,18 +7,19 @@ namespace ProjectsService.Repositories
 {
     public class ProjectDbContext: DbContext
     {
-        public DbSet<TodoDto> DataSet { get; set; }
-
-        // Causing problems for migration generation:
-        // System.MissingMethodException: No parameterless constructor defined for type 'UserService.Repositories.UserDbContext'.
+        public DbSet<ProjectDto> Projects { get; set; }
+        public DbSet<TodoDto> Todos { get; set; }
+        public DbSet<TodoTagDto> TodoTags { get; set; }
+        
         public ProjectDbContext(DbContextOptions<ProjectDbContext> options) : base(options)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<ProjectDto>().HasKey(m => m.Id);
             builder.Entity<ProjectDto>().ToTable("Project");
+            builder.Entity<TodoDto>().ToTable("Todo");
+            builder.Entity<TodoTagDto>().ToTable("TodoTag");
             base.OnModelCreating(builder);
         }
 

@@ -7,20 +7,22 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" NoWarn="NU1605" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.1" NoWarn="NU1605" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0-preview.4.21253.1" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.0-preview4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.9" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Messages\Commands\Projects\Handlers" />
-      <Folder Include="Messages\Events\Projects" />
-      <Folder Include="Messages\Queries\Projects\Handlers" />
-      <Folder Include="Messages\Queries\Todos\Handlers" />
+      <ProjectReference Include="..\..\Invoicer.Common\src\Invoicer.Common.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Invoicer.Common\src\Invoicer.Common.csproj" />
+      <Folder Include="Migrations" />
     </ItemGroup>
 
 </Project>

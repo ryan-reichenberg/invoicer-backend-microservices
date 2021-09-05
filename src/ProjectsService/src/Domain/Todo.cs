@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Invoicer.Common.Types.DDD;
 using OpenTracing.Tag;
@@ -9,17 +10,15 @@ namespace ProjectsService.Domain
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public string ProjectId { get; private set; }
         public TodoStatus Status { get; private set; }
         
         public List<TodoTag> Tags { get; private set; }
 
-        public Todo(AggregateId id, string name, string description, string projectId, TodoStatus status, List<TodoTag> tags)
+        public Todo(AggregateId id, string name, string description, TodoStatus status, List<TodoTag> tags)
         {
             Id = id;
             Name = name;
             Description = description;
-            ProjectId = projectId;
             Status = status;
             Tags = tags;
         }
@@ -32,6 +31,11 @@ namespace ProjectsService.Domain
         public void AddNewTag(TodoTag tag)
         {
             Tags.Add(tag);
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(Name)}: {Name}, {nameof(Description)}: {Description}, {nameof(Status)}: {Status}, {nameof(Tags)}: {Tags}";
         }
     }
 }

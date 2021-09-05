@@ -8,20 +8,21 @@ namespace ProjectsService.DTO
 {
     public class TodoDto : IIdentifiable<Guid>
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ProjectId { get;  set; }
         public TodoStatus Status { get;  set; }
-        
         public List<TodoTagDto> Tags { get; set; }
 
-        public TodoDto(Guid id, string name, string description, string projectId, TodoStatus status, List<TodoTagDto> tags)
+        public TodoDto()
+        {
+        }
+
+        public TodoDto(Guid id, string name, string description, TodoStatus status, List<TodoTagDto> tags)
         {
             Id = id;
             Name = name;
             Description = description;
-            ProjectId = projectId;
             Status = status;
             Tags = tags;
         }

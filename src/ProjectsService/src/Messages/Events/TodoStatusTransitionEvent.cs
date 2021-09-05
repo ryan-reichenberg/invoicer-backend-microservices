@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using Invoicer.Common;
+using Invoicer.Common.RabbitMq.Attributes;
 using Invoicer.Common.Types.DDD;
 using ProjectsService.Domain;
 
 namespace ProjectsService.Messages.Events.Todos
 {
+    [Message("todos")]
     public class TodoStatusTransitionEvent : IEvent
     {
         public AggregateId Id { get; set; }
@@ -12,11 +14,8 @@ namespace ProjectsService.Messages.Events.Todos
         public TodoStatus TransitionedStatus { get; set; }
 
         [JsonConstructor]
-        public TodoStatusTransitionEvent(AggregateId id, TodoStatus previousStatus, TodoStatus transitionedStatus)
+        public TodoStatusTransitionEvent()
         {
-            Id = id;
-            PreviousStatus = previousStatus;
-            TransitionedStatus = transitionedStatus;
         }
     }
 }

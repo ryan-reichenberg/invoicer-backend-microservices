@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Invoicer.Common.Extensions;
+using Invoicer.Common.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,9 +41,6 @@ namespace ProjectsService
                 .AddJaeger()
                 .Initialize();
             services.AddScoped<IProjectRepository, ProjectsRepository>();
-            services.AddScoped<ITodoRepository, TodoRepository>();
-            services.AddDbContext<TodoDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("TodoManagementCN")));
             services.AddDbContext<ProjectDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("ProjectManagementCN")));
         }
@@ -67,6 +66,11 @@ namespace ProjectsService
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/", async context =>
+                {
+                    var options = Configuration.GetOptions<AppOptions>("app");
+                    await context.Response.WriteAsync($"{options.Name} v{options.Version}");
+                });
                 endpoints.MapControllers();
             });
 

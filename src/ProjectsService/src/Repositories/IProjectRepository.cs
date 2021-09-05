@@ -7,11 +7,19 @@ namespace ProjectsService.Repositories
 {
     public interface IProjectRepository
     {
-        Task<Project> FindByIdAsync(Guid id);
-        Task<List<Project>> FindAllProjectsByUserId(Guid id);
+        Task<Project> FindByIdAsync(string id);
+        Task<List<Project>> FindAllProjectsByUserIdAsync(string id);
+
+        Task<Todo> FindTodoByIdAsync(string todoId);
         
-        Task<Project> SaveAsync(Project entity);
-        Task<Project> UpdateAsync(Project entity);
-        Task<Project> DeleteAsync(Guid id);
+        Task SaveTodoAsync(Todo entity);
+        
+        Task SaveProjectAsync(Project entity);
+        Task UpdateTodoAsync(Todo entity);
+        
+        Task UpdateProjectAsync(Project entity);
+        Task DeleteTodoAsync(string id);
+        Task DeleteProjectAsync(string id);
+        Task DeleteTodoTag(string id);
     }
 }
