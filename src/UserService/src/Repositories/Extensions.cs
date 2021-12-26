@@ -1,5 +1,4 @@
-﻿using StackExchange.Redis;
-using UserService.Domain;
+﻿using UserService.Domain;
 using UserService.DTO;
 
 namespace UserService.Repositories

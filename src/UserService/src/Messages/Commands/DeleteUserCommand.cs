@@ -1,6 +1,5 @@
 ﻿using System;
-using Invoicer.Common;
-using Newtonsoft.Json;
+using Convey.CQRS.Commands;
 
 namespace UserService.Messages.Commands
 {
@@ -8,7 +7,6 @@ namespace UserService.Messages.Commands
     {
         public Guid Id { get; set; }
         
-        [JsonConstructor]
         public DeleteUserCommand(Guid id)
         {
             Id = id;

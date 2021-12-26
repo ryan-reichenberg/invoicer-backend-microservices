@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Invoicer.Common;
+using Convey.CQRS.Queries;
 using UserService.DTO;
 
 namespace UserService.Queries

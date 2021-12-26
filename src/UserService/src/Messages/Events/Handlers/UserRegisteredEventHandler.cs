@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Invoicer.Common.Handlers;
+using Convey.CQRS.Events;
 using Microsoft.Extensions.Logging;
 
 namespace UserService.Events.Handlers

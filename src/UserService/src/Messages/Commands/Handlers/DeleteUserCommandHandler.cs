@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Invoicer.Common.Handlers;
+using Convey.CQRS.Commands;
 using UserService.Repositories;
 
 namespace UserService.Messages.Commands.Handlers

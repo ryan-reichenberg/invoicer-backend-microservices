@@ -1,5 +1,5 @@
 ﻿using System;
-using Invoicer.Common.Types;
+using Convey.Types;
 
 namespace UserService.DTO
 {

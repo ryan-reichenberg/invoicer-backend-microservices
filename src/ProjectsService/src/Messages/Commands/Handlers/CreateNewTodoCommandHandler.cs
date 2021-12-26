@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Invoicer.Common.Dispatchers;
 using Invoicer.Common.Handlers;
 using Invoicer.Common.Messaging.MessageBroker;
 using ProjectsService.Domain;
@@ -9,10 +10,10 @@ namespace ProjectsService.Messages.Commands.Handlers
 {
     public class CreateNewTodoCommandHandler : ICommandHandler<CreateNewTodoCommand>
     {
-        private readonly IMessageBroker _messageBroker;
+        private readonly IEventDispatcher _messageBroker;
         private readonly IProjectRepository _projectRepository;
 
-        public CreateNewTodoCommandHandler(IMessageBroker messageBroker, IProjectRepository projectRepository)
+        public CreateNewTodoCommandHandler(IEventDispatcher messageBroker, IProjectRepository projectRepository)
         {
             _messageBroker = messageBroker;
             _projectRepository = projectRepository;

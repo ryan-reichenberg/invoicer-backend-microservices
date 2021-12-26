@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using UserService.Domain;
+using UserService.DTO;
 
 namespace UserService.Repositories
 {
@@ -26,6 +28,11 @@ namespace UserService.Repositories
             await _dbContext.SaveChangesAsync();
             return null;
 
+        }
+
+        public async Task<List<UserDto>> FindAll()
+        {
+            return await _dbContext.DataSet.ToListAsync();
         }
 
         public async Task<User> FindByIdAsync(Guid id)

@@ -1,5 +1,6 @@
 using System;
 using Hangfire;
+using Invoicer.Common.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,14 @@ namespace PaymentsService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddInvoicerCommon()
+                .AddCqrs()
+                .AddInMemoryCommandDispatcher()
+                .AddInMemoryQueryDispatcher()
+                .AddWebApi()
+                .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
+                .AddJaeger()
+                .Initialize();
             services.AddTransient<IStripeService, StripeService>();
             services.AddHangfire(x => x.UseSqlServerStorage(_configuration.GetConnectionString("HangfireConnection")));
             services.AddHangfireServer();
@@ -36,6 +45,7 @@ namespace PaymentsService
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.RunInitializers();
             app.UseHangfireDashboard();
             RecurringJob.AddOrUpdate<IStripeService>(x => 
                 x.SendPayoutToAccount(), Cron.Daily, TimeZoneInfo.FindSystemTimeZoneById("Australia/Melbourne"));

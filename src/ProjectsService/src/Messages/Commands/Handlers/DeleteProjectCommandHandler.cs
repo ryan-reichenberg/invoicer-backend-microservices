@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Invoicer.Common.Dispatchers;
 using Invoicer.Common.Handlers;
 using Invoicer.Common.Messaging.MessageBroker;
 using Microsoft.Extensions.Logging;
@@ -8,11 +9,11 @@ namespace ProjectsService.Messages.Commands.Handlers
 {
     public class DeleteProjectCommandHandler : ICommandHandler<DeleteProjectCommand>
     {
-        private readonly IMessageBroker _messageBroker;
+        private readonly IEventDispatcher _messageBroker;
         private readonly IProjectRepository _projectRepository;
         private readonly ILogger<DeleteProjectCommandHandler> _logger;
 
-        public DeleteProjectCommandHandler(IMessageBroker messageBroker, IProjectRepository projectRepository, ILogger<DeleteProjectCommandHandler> logger)
+        public DeleteProjectCommandHandler(IEventDispatcher messageBroker, IProjectRepository projectRepository, ILogger<DeleteProjectCommandHandler> logger)
         {
             _messageBroker = messageBroker;
             _projectRepository = projectRepository;

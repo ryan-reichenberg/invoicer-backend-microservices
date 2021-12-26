@@ -1,6 +1,6 @@
 ﻿using System;
-using Invoicer.Common;
-using Invoicer.Common.RabbitMq.Attributes;
+using Convey.CQRS.Events;
+using Convey.MessageBrokers;
 
 namespace UserService.Events
 {

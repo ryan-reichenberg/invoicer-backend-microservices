@@ -1,17 +1,17 @@
 ﻿using System.Threading.Tasks;
-using Invoicer.Common.Handlers;
-using Invoicer.Common.RabbitMq.Attributes;
+using Convey.CQRS.Commands;
+using Convey.MessageBrokers;
 using Microsoft.Extensions.Logging;
 using UserService.Repositories;
 
 namespace UserService.Messages.Commands.Handlers
 {
-    [Message("users")]
+    // [Message("users")]
     public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
     {
         private IUserRepository _repository;
-        private ILogger<RegisterUserCommand> _logger;
-        public RegisterUserCommandHandler(IUserRepository repository, ILogger<RegisterUserCommand> logger)
+        private ILogger<RegisterUserCommandHandler> _logger;
+        public RegisterUserCommandHandler(IUserRepository repository, ILogger<RegisterUserCommandHandler> logger)
         {
             _repository = repository;
             _logger = logger;

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Invoicer.Common.Dispatchers;
 using Invoicer.Common.Handlers;
 using Invoicer.Common.Messaging.MessageBroker;
 using Microsoft.Extensions.Logging;
@@ -8,12 +9,12 @@ namespace ProjectsService.Messages.Commands.Handlers
 {
     public class DeleteTodoTagCommandHandler : ICommandHandler<DeleteTodoTagCommand>
     {
-        private readonly IMessageBroker _messageBroker;
+        private readonly IEventDispatcher _messageBroker;
         private readonly IProjectRepository _projectRepository;
         private readonly ILogger<DeleteTodoTagCommandHandler> _logger;
         
 
-        public DeleteTodoTagCommandHandler(IMessageBroker messageBroker, IProjectRepository projectRepository, ILogger<DeleteTodoTagCommandHandler> logger)
+        public DeleteTodoTagCommandHandler(IEventDispatcher messageBroker, IProjectRepository projectRepository, ILogger<DeleteTodoTagCommandHandler> logger)
         {
             _messageBroker = messageBroker;
             _projectRepository = projectRepository;

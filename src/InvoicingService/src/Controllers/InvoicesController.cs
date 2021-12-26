@@ -31,5 +31,11 @@ namespace InvoicingService.Controllers
         {
             return Ok();
         }
+        
+        [HttpPut("status/{Status}")]
+        public IActionResult UpdateInvoice(Invoice invoice, InvoiceStatus status)
+        {
+            return Ok();
+        }
     }
 }

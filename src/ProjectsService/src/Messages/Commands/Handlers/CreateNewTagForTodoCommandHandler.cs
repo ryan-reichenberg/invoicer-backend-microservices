@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Invoicer.Common.Dispatchers;
 using Invoicer.Common.Handlers;
 using Invoicer.Common.Messaging.MessageBroker;
 using Microsoft.Extensions.Logging;
@@ -11,11 +12,11 @@ namespace ProjectsService.Messages.Commands.Handlers
     public class CreateNewTagForTodoCommandHandler : ICommandHandler<AddNewTagForTodoCommand>
     {
 
-        private readonly IMessageBroker _messageBroker;
+        private readonly IEventDispatcher _messageBroker;
         private readonly ILogger<CreateNewTagForTodoCommandHandler> _logger;
         private readonly IProjectRepository _projectRepository;
 
-        public CreateNewTagForTodoCommandHandler(IMessageBroker messageBroker, IProjectRepository projectRepository, ILogger<CreateNewTagForTodoCommandHandler> logger)
+        public CreateNewTagForTodoCommandHandler(IEventDispatcher messageBroker, IProjectRepository projectRepository, ILogger<CreateNewTagForTodoCommandHandler> logger)
         {
             _messageBroker = messageBroker;
             _projectRepository = projectRepository;

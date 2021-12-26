@@ -17,22 +17,23 @@ services:
       - 5432:5432
     environment:
       - POSTGRES_PASSWORD=password
-  rabbitmqserver:
+  rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmqserver
     hostname: 'rabbit-mq-host'
-    volumes:
-      - "./.docker/rabbitmq/etc/:/etc/rabbitmq/"
-      - "./.docker/rabbitmq/data/:/var/lib/rabbitmq/mnesia"
-      - "./.docker/rabbitmq/logs/:/var/log/rabbitmq/"
+#    volumes:
+#      - "./.docker/rabbitmq/etc/:/etc/rabbitmq/"
+#      - "./.docker/rabbitmq/data/:/var/lib/rabbitmq/mnesia"
+#      - "./.docker/rabbitmq/logs/:/var/log/rabbitmq/"
     ports:
       - 5672:5672
       - 15672:15672
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
     container_name: sqlserver
+    user: root
     ports:
-      - 1434:1433
+      - 1433:1433
     environment:
       - ACCEPT_EULA=Y 
       - SA_PASSWORD=tSlY4ETLAZ
@@ -47,6 +48,16 @@ services:
       - 27017:27017
     volumes:
       - mongodb:/data/db
+  vault:
+    image: vault
+    container_name: vault
+    ports:
+      - 8200:8200
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+      - VAULT_DEV_ROOT_TOKEN_ID=secret
+    cap_add:
+      - IPC_LOCK
   jaeger:
     image: jaegertracing/all-in-one
     container_name: jaeger

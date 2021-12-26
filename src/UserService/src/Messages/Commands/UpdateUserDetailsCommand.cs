@@ -1,6 +1,5 @@
 ﻿using System;
-using Invoicer.Common;
-using Newtonsoft.Json;
+using Convey.CQRS.Commands;
 
 namespace UserService.Messages.Commands
 {
@@ -16,8 +15,6 @@ namespace UserService.Messages.Commands
         public string StreetAddress { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
-
-        [JsonConstructor]
         public UpdateUserDetailsCommand(Guid id, string name, string mobileNumber, string emailAddress, String streetAddress, string postalCode, string city)
         {
             Id = id;

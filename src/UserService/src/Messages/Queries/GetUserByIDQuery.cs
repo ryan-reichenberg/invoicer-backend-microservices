@@ -1,5 +1,5 @@
 ﻿using System;
-using Invoicer.Common;
+using Convey.CQRS.Queries;
 using Newtonsoft.Json;
 using UserService.DTO;
 

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Invoicer.Common.Handlers;
+using Convey.CQRS.Queries;
 using UserService.DTO;
 using UserService.Queries;
 using UserService.Repositories;

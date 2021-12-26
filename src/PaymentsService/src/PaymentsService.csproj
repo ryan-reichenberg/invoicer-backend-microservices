@@ -11,4 +11,9 @@
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.27" />
     <PackageReference Include="Stripe.net" Version="39.74.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Invoicer.Common\src\Invoicer.Common.csproj" />
+    <ProjectReference Include="..\..\InvoicingService\src\InvoicingService.csproj" />
+  </ItemGroup>
 </Project>
