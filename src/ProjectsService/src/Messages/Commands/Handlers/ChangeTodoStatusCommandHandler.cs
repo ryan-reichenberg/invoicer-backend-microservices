@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
-using Invoicer.Common.Dispatchers;
-using Invoicer.Common.Handlers;
-using Invoicer.Common.Messaging.MessageBroker;
+using Convey.CQRS.Commands;
+using Convey.CQRS.Events;
 using ProjectsService.Messages.Commands.Todos;
 using ProjectsService.Repositories;
 
@@ -13,7 +12,7 @@ namespace ProjectsService.Messages.Commands.Handlers
         private readonly IEventDispatcher _messageBroker;
         private readonly IProjectRepository _projectRepository;
 
-        public ChangeTodoStatusCommandHandler( IEventDispatcher messageBroker, IProjectRepository projectRepository)
+        public ChangeTodoStatusCommandHandler(IEventDispatcher messageBroker, IProjectRepository projectRepository)
         {
             _messageBroker = messageBroker;
             _projectRepository = projectRepository;

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Invoicer.Common.Handlers;
+using Convey.CQRS.Commands;
 
 namespace ProjectsService.Messages.Commands.Handlers
 {

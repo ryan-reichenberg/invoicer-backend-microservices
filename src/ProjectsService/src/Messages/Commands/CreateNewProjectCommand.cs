@@ -1,3 +1,4 @@
+using Convey.CQRS.Commands;
 using Invoicer.Common;
 
 namespace ProjectsService.Messages.Commands

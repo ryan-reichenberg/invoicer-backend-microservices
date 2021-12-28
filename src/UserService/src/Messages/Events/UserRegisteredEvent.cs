@@ -1,6 +1,7 @@
 ﻿using System;
 using Convey.CQRS.Events;
 using Convey.MessageBrokers;
+using UserService.Messages.Commands;
 
 namespace UserService.Events
 {
@@ -27,6 +28,17 @@ namespace UserService.Events
             City = city;
             MobileNumber = mobileNumber;
             EmailAddress = emailAddress;
+        }
+        
+        public UserRegisteredEvent(RegisterUserCommand command)
+        {
+            UserId = command.Id;
+            Name = command.Name;
+            StreetAddress = command.StreetAddress;
+            PostalCode = command.PostalCode;
+            City = command.City;
+            MobileNumber = command.MobileNumber;
+            EmailAddress = command.EmailAddress;
         }
     }
 }

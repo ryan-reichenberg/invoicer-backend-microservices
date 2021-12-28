@@ -11,34 +11,24 @@
 
   <ItemGroup>
     <PackageReference Include="Convey" Version="0.5.518" />
+    <PackageReference Include="Convey.Auth" Version="0.5.518" />
     <PackageReference Include="Convey.CQRS.Commands" Version="0.5.518" />
     <PackageReference Include="Convey.CQRS.Events" Version="0.5.518" />
     <PackageReference Include="Convey.CQRS.Queries" Version="0.5.518" />
-    <PackageReference Include="Figgle" Version="0.4.0" />
-    <PackageReference Include="Jaeger" Version="0.4.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.12" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="5.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.12" />
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
-    <PackageReference Include="MongoDB.Driver" Version="2.12.0-beta1" />
-    <PackageReference Include="Open.Serialization.Json.Newtonsoft" Version="2.3.1" />
-    <PackageReference Include="Open.Serialization.Json.System" Version="2.3.1" />
-    <PackageReference Include="Open.Serialization.Json.Utf8Json" Version="2.3.1" />
-    <PackageReference Include="OpenTracing" Version="0.12.1" />
-    <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.8.0" />
-    <PackageReference Include="Polly" Version="7.2.1" />
-    <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
-    <PackageReference Include="Scrutor" Version="3.3.0" />
-    <PackageReference Include="Serilog" Version="2.10.1-dev-01265" />
-    <PackageReference Include="Serilog.AspNetCore" Version="3.4.1-dev-00188" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.2-dev-10281" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0-dev-00839" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0-dev-00909" />
-    <PackageReference Include="Serilog.Sinks.Seq" Version="5.0.0-dev-00174" />
+    <PackageReference Include="Convey.Logging" Version="0.5.518" />
+    <PackageReference Include="Convey.MessageBrokers" Version="0.5.518" />
+    <PackageReference Include="Convey.MessageBrokers.CQRS" Version="0.5.518" />
+    <PackageReference Include="Convey.Persistence.MongoDB" Version="0.5.518" />
+    <PackageReference Include="Convey.Persistence.Redis" Version="0.5.518" />
+    <PackageReference Include="Convey.Secrets.Vault" Version="0.5.518" />
+    <PackageReference Include="Convey.Security" Version="0.5.518" />
+    <PackageReference Include="Convey.Tracing.Jaeger" Version="0.5.518" />
+    <PackageReference Include="Convey.Tracing.Jaeger.RabbitMQ" Version="0.5.518" />
+    <PackageReference Include="EntityFramework" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="SmartFormat.NET" Version="2.5.3" />
   </ItemGroup>
 </Project>

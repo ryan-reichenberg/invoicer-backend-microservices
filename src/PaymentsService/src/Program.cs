@@ -1,4 +1,4 @@
-using Invoicer.Common.Extensions;
+using Convey.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 

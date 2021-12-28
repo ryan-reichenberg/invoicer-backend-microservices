@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Invoicer.Common.Dispatchers;
+using Convey.CQRS.Commands;
+using Convey.CQRS.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjectsService.Domain;
 using ProjectsService.Messages.Commands;
-using ProjectsService.Messages.Commands.Todos;
 using ProjectsService.Messages.Queries;
 
 namespace ProjectsService.Controllers

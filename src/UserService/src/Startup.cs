@@ -6,9 +6,11 @@ using Convey.CQRS.Events;
 using Convey.CQRS.Queries;
 using Convey.MessageBrokers.RabbitMQ;
 using Convey.Tracing.Jaeger.RabbitMQ;
+using Convey.Types;
 using Invoicer.Common.CQRS.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,6 +75,11 @@ namespace UserService
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/", async context =>
+                {
+                    var options = _configuration.GetOptions<AppOptions>("app");
+                    await context.Response.WriteAsync($"{options.Name} v{options.Version}");
+                });
                 endpoints.MapControllers();
             });
             // auto migrate db

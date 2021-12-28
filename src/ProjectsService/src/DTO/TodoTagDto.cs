@@ -1,4 +1,5 @@
 using System;
+using Convey.Types;
 using Invoicer.Common.Types;
 
 namespace ProjectsService.DTO

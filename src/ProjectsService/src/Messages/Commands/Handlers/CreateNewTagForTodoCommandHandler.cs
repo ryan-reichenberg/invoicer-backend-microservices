@@ -1,10 +1,8 @@
 using System.Threading.Tasks;
-using Invoicer.Common.Dispatchers;
-using Invoicer.Common.Handlers;
-using Invoicer.Common.Messaging.MessageBroker;
+using Convey.CQRS.Commands;
+using Convey.CQRS.Events;
 using Microsoft.Extensions.Logging;
 using ProjectsService.Domain;
-using ProjectsService.Messages.Commands.Todos;
 using ProjectsService.Repositories;
 
 namespace ProjectsService.Messages.Commands.Handlers

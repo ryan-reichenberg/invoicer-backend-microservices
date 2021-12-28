@@ -3,6 +3,7 @@
   <component name="UserContentModel">
     <attachedFolders>
       <Path>../../invoicer-backend-microservices</Path>
+      <Path>scripts</Path>
     </attachedFolders>
     <explicitIncludes />
     <explicitExcludes />

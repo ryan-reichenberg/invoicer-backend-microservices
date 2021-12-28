@@ -1,4 +1,5 @@
 using System;
+using Convey.CQRS.Queries;
 using Invoicer.Common;
 using Newtonsoft.Json;
 using ProjectsService.Domain;

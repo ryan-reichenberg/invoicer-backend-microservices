@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Invoicer.Common.Dispatchers;
+using Convey.CQRS.Commands;
+using Convey.CQRS.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjectsService.Domain;

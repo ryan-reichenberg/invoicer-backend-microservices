@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using Invoicer.Common;
-using Invoicer.Common.RabbitMq.Attributes;
+using Convey.CQRS.Events;
+using Convey.MessageBrokers;
 using Invoicer.Common.Types.DDD;
 using ProjectsService.Domain;
 

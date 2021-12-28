@@ -2,7 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Invoicer.Common.Extensions;
+using Convey;
+using Convey.CQRS.Commands;
+using Convey.CQRS.Events;
+using Convey.CQRS.Queries;
+using Convey.MessageBrokers.CQRS;
+using Convey.MessageBrokers.RabbitMQ;
+using Convey.Tracing.Jaeger;
+using Convey.Tracing.Jaeger.RabbitMQ;
+using Convey.Types;
 using Invoicer.Common.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,17 +40,21 @@ namespace ProjectsService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddInvoicerCommon()
-                .AddCqrs()
-                .AddInMemoryCommandDispatcher()
-                .AddInMemoryQueryDispatcher()
-                .AddWebApi()
-                .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
-                .AddJaeger()
-                .Initialize();
             services.AddScoped<IProjectRepository, ProjectsRepository>();
             services.AddDbContext<ProjectDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("ProjectManagementCN")));
+            services.AddConvey()
+                .AddCommandHandlers()
+                .AddEventHandlers()
+                .AddQueryHandlers()
+                .AddInMemoryCommandDispatcher()
+                .AddInMemoryQueryDispatcher()
+                .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
+                .AddServiceBusEventDispatcher()
+                .AddJaeger()
+                .Build();
+
+      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,8 +66,7 @@ namespace ProjectsService
             }
 
             app.UseHttpsRedirection();
-
-            app.RunInitializers();
+            
             // app.UseRabbitMq()
             //     .SubscribeCommand<RegisterUserCommand>()
             //     .SubscribeEvent<UserRegisteredEvent>();

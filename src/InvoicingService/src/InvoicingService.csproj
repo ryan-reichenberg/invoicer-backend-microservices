@@ -8,4 +8,12 @@
     <ProjectReference Include="..\..\Invoicer.Common\src\Invoicer.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTO" />
+  </ItemGroup>
+
 </Project>

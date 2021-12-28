@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Convey.Types;
 using Invoicer.Common.Types;
 using ProjectsService.Domain;
 

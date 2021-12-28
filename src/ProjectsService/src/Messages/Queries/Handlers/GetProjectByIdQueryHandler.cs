@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Invoicer.Common.Handlers;
+using Convey.CQRS.Queries;
 using Microsoft.Extensions.Logging;
 using ProjectsService.Domain;
 using ProjectsService.Repositories;

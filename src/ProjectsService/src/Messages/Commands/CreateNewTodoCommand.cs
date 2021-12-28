@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Convey.CQRS.Commands;
 using Invoicer.Common;
 using ProjectsService.Domain;
 
