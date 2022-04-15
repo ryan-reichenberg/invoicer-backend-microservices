@@ -1,0 +1,11 @@
+{
+  "projects-service": {
+    "exchange": "projects",
+    "commands": [
+    ],
+    "events": [
+    ],
+    "rejectedEvents": [
+    ]
+  }
+}

@@ -1,5 +1,7 @@
 using System;
 using InvoicingService.Domain;
+using InvoicingService.DTO;
+using InvoicingService.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvoicingService.Controllers
@@ -8,6 +10,13 @@ namespace InvoicingService.Controllers
     [ApiController]
     public class InvoicesController : Controller
     {
+        private IInvoiceRepository _invoiceRepository;
+
+        public InvoicesController(IInvoiceRepository invoiceRepository)
+        {
+            _invoiceRepository = invoiceRepository;
+        }
+
         [HttpGet("/user/{Id}")]
         public IActionResult GetInvoicesForUser(Guid id)
         {
@@ -17,13 +26,15 @@ namespace InvoicingService.Controllers
         [HttpGet("{Id}")]
         public IActionResult GetInvoice(Guid id)
         {
-            return Ok();
+            var invoice = _invoiceRepository.GetByIdAsync(id.ToString());
+            return Ok(invoice);
         }
         
         [HttpPost]
-        public IActionResult CreateNewInvoice(Invoice invoice)
+        public IActionResult CreateNewInvoice(InvoiceDto invoice)
         {
-            return Ok();
+            var createdInvoice = _invoiceRepository.SaveAsync(invoice);
+            return Ok(createdInvoice);
         }
         
         [HttpPut]

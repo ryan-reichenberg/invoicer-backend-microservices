@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Convey;
 using Convey.CQRS.Commands;
 using Convey.CQRS.Events;
@@ -6,9 +7,11 @@ using Convey.MessageBrokers.RabbitMQ;
 using Convey.Tracing.Jaeger;
 using Convey.Tracing.Jaeger.RabbitMQ;
 using Convey.Types;
+using InvoicingService.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +30,11 @@ namespace InvoicingService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddDbContext<InvoiceDbContext>(options =>
+                options.UseNpgsql(_configuration.GetConnectionString("InvoiceManagementCN")));
             services.AddConvey()
                 .AddCommandHandlers()
                 .AddEventHandlers()

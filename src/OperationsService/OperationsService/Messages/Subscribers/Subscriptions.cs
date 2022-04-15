@@ -31,7 +31,7 @@ namespace OperationsService.Messages.Subscribers
             }
 
             var servicesMessages = JsonConvert.DeserializeObject<IDictionary<string, ServiceMessages>>(messages);
-            if (!servicesMessages.Any())
+            if (servicesMessages != null && !servicesMessages.Any())
             {
                 return subscriber;
             }
