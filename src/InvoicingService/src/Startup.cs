@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json.Serialization;
 using Convey;
 using Convey.CQRS.Commands;
@@ -30,8 +31,7 @@ namespace InvoicingService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddJsonOptions(options =>
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+            services.AddControllers().AddNewtonsoftJson();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
             services.AddDbContext<InvoiceDbContext>(options =>
                 options.UseNpgsql(_configuration.GetConnectionString("InvoiceManagementCN")));
@@ -70,6 +70,10 @@ namespace InvoicingService
                 });
                 endpoints.MapControllers();
             });
+            
+            using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            Console.WriteLine("Running migration");
+            scope.ServiceProvider.GetService<InvoiceDbContext>()?.MigrateDB();
         }
     }
 }

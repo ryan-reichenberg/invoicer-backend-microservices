@@ -11,8 +11,10 @@ namespace InvoicingService.DTO
         public InvoiceDto()
         {
         }
+        
+        
 
-        public InvoiceDto(Guid id, DateTime issuedAt, DateTime dueDate, bool recurring, double taxRate, decimal tax, decimal subTotal, string additionalNotes, string projectId, DateTime createdAt, DateTime modifiedAt, InvoiceStatus status)
+        public InvoiceDto(Guid id, DateTime issuedAt, DateTime dueDate, bool recurring, double taxRate, decimal tax, decimal subTotal, string additionalNotes, string projectId, DateTime createdAt, DateTime modifiedAt, InvoiceStatus status, Guid invoicedTo, Guid invoiceFrom)
         {
             Id = id;
             IssuedAt = issuedAt;
@@ -26,8 +28,11 @@ namespace InvoicingService.DTO
             CreatedAt = createdAt;
             ModifiedAt = modifiedAt;
             Status = status;
+            InvoicedFrom = invoiceFrom;
+            InvoicedTo = invoicedTo;
+            
         }
-        public InvoiceDto(Guid id, List<LineItemDto>? items, Contact? billTo, Contact? billFrom, DateTime issuedAt, DateTime dueDate, bool recurring, double taxRate, decimal tax, decimal subTotal, string additionalNotes, string projectId, DateTime createdAt, DateTime modifiedAt, InvoiceStatus status)
+        public InvoiceDto(Guid id, List<LineItemDto>? items, Contact? billTo, Contact? billFrom, DateTime issuedAt, DateTime dueDate, bool recurring, double taxRate, decimal tax, decimal subTotal, string additionalNotes, string projectId, DateTime createdAt, DateTime modifiedAt, InvoiceStatus status, Guid invoicedTo, Guid invoiceFrom)
         {
             Id = id;
             Items = items;
@@ -44,9 +49,13 @@ namespace InvoicingService.DTO
             CreatedAt = createdAt;
             ModifiedAt = modifiedAt;
             Status = status;
+            InvoicedFrom = invoiceFrom;
+            InvoicedTo = invoicedTo;
         }
         
         public Guid Id { get; set; }
+        public Guid InvoicedFrom { get; set; }
+        public Guid InvoicedTo { get; set; }
         public List<LineItemDto> Items { get; set; }
         public Contact BillTo { get; set; }
         public Contact BillFrom { get; set; }
@@ -60,6 +69,7 @@ namespace InvoicingService.DTO
         public string ProjectId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public InvoiceStatus Status { get; set; }
     }
 }

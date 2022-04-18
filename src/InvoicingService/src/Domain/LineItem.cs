@@ -4,10 +4,8 @@ namespace InvoicingService.Domain
 {
     public class LineItem
     {
-        public Guid Id { get; set; }
-        public LineItem(Guid id, string? description, decimal? price, int? quantity)
+        public LineItem(string? description, decimal? price, int? quantity)
         {
-            Id = id;
             Description = description;
             Price = price;
             Quantity = quantity;

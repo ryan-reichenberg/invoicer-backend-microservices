@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using InvoicingService.Domain;
 using InvoicingService.DTO;
@@ -30,10 +32,40 @@ namespace InvoicingService.Repositories
         {
             throw new System.NotImplementedException();
         }
+        
 
-        public Task<List<Invoice>> GetAllAsync()
+        public async Task<List<Invoice>> GetAllInvoicesForUserAsync(string id)
         {
-            throw new System.NotImplementedException();
+            var invoices = await _dbContext.Invoices.Where(x => x.InvoicedFrom.ToString() == id).ToListAsync();
+            return invoices.Select(dto => dto.AsEntity()).ToList();
+        }
+
+        public async Task<List<Invoice>> GetInvoicesBy(InvoiceStatus? status, Guid? invoicedTo, DateTime? issuedAfter, DateTime? issuedBefore,
+            Guid? projectId)
+        {
+            var invoiceDbSet = _dbContext.Invoices.AsQueryable();
+            
+            if (status != null)
+            {
+                invoiceDbSet = invoiceDbSet.Where(x => x.Status == status);
+            }
+            if (invoicedTo != null)
+            {
+                invoiceDbSet = invoiceDbSet.Where(x => x.InvoicedTo == invoicedTo);
+            }
+            if (issuedAfter != null)
+            {
+                invoiceDbSet = invoiceDbSet.Where(x => x.IssuedAt > issuedAfter);
+            }
+            if (issuedBefore != null)
+            {
+                invoiceDbSet = invoiceDbSet.Where(x => x.IssuedAt < issuedBefore);
+            }
+
+            var invoices = await invoiceDbSet.ToListAsync();
+                    
+
+            return invoices.Select(dto => dto.AsEntity()).ToList();
         }
 
         public async Task<Invoice> GetByIdAsync(string id)
