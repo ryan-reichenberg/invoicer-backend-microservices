@@ -24,7 +24,7 @@ namespace UserService.Messages.Commands.Handlers
         public Task HandleAsync(RegisterUserCommand command)
         {
             _logger.LogInformation("Received command");
-            _busPublisher.PublishAsync(new UserRegisteredEvent(command));
+            // _busPublisher.PublishAsync(new UserRegisteredEvent(command));
             return Task.CompletedTask;
         }
     }

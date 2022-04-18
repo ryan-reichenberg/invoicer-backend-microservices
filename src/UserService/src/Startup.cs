@@ -4,7 +4,9 @@ using Convey;
 using Convey.CQRS.Commands;
 using Convey.CQRS.Events;
 using Convey.CQRS.Queries;
+using Convey.MessageBrokers.CQRS;
 using Convey.MessageBrokers.RabbitMQ;
+using Convey.Tracing.Jaeger;
 using Convey.Tracing.Jaeger.RabbitMQ;
 using Convey.Types;
 using Invoicer.Common.CQRS.Logging;
@@ -37,7 +39,6 @@ namespace UserService
             
             var builder = services
                 .AddConvey();
-            builder.Services.AddOpenTracing();
             builder.Services.AddControllers();
             builder.Services.AddSingleton<IMessageToLogTemplateMapper>(new MessageToLogTemplateMapper());
             builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -45,15 +46,15 @@ namespace UserService
                 options.UseSqlServer(_configuration.GetConnectionString("UserManagementCN")));
             builder
                 .AddCommandHandlers()
-                .AddQueryHandlers()
                 .AddEventHandlers()
-                // .AddQueryHandlersLogging()
+                .AddQueryHandlers()
                 .AddInMemoryCommandDispatcher()
                 .AddInMemoryQueryDispatcher()
+                .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin())
+                .AddJaeger()
                 .AddCommandHandlersLogging(assembly)
                 .AddEventHandlersLogging(assembly)
-                .AddQueryHandlersLogging(assembly)
-                .AddRabbitMq(plugins: p => p.AddJaegerRabbitMqPlugin());
+                .AddQueryHandlersLogging(assembly);
 
             builder.Build();
         }
@@ -69,8 +70,12 @@ namespace UserService
             app.UseRouting();
 
             app.UseAuthentication();
-            
-            // app.UseRabbitMq()
+
+            app
+                .UseJaeger()
+                .UseConvey()
+                .UseRabbitMq()
+                .SubscribeCommand<RegisterUserCommand>();
             //     .SubscribeCommand<>
 
             app.UseEndpoints(endpoints =>
@@ -83,9 +88,9 @@ namespace UserService
                 endpoints.MapControllers();
             });
             // auto migrate db
-            using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
-            Console.WriteLine("Running migration");
-            scope.ServiceProvider.GetService<UserDbContext>()?.MigrateDB();
+            // using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            // Console.WriteLine("Running migration");
+            // scope.ServiceProvider.GetService<UserDbContext>()?.MigrateDB();
         }
         
     }

@@ -1,8 +1,10 @@
 ﻿using System;
 using Convey.CQRS.Commands;
+using Convey.MessageBrokers;
 
 namespace UserService.Messages.Commands
 {
+    [Message("users")]
     public class RegisterUserCommand : ICommand
     {
         public string EmailAddress { get; set; }

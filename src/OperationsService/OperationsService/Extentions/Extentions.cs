@@ -23,7 +23,7 @@ namespace OperationsService.Extentions
             }
 
             var redisOptions = builder.GetOptions<RedisOptions>("redis");
-            signalR.AddRedis(redisOptions.ConnectionString);
+            signalR.AddStackExchangeRedis(redisOptions.ConnectionString);
 
             return builder;
         }

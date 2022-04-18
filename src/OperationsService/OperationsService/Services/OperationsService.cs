@@ -50,6 +50,7 @@ namespace OperationsService.Services
                 JsonConvert.SerializeObject(operation),
                 new DistributedCacheEntryOptions
                 {
+                    // We will need to review this value for prod - 5 mins too short
                     SlidingExpiration = TimeSpan.FromSeconds(_options.ExpirySeconds)
                 });
 

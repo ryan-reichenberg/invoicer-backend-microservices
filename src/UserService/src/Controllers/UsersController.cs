@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Convey.CQRS.Commands;
 using Convey.CQRS.Queries;
+using Convey.MessageBrokers;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Domain;
 using UserService.DTO;
@@ -16,12 +17,14 @@ namespace UserService.Controllers
     public class UsersController : Controller
     {
         private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IBusPublisher _busPublisher;
         private readonly IQueryDispatcher _queryDispatcher;
 
-        public UsersController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
+        public UsersController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher, IBusPublisher busPublisher)
         {
             _commandDispatcher = commandDispatcher;
             _queryDispatcher = queryDispatcher;
+            _busPublisher = busPublisher;
         }
         // GET: api/users
         [HttpGet]
@@ -44,7 +47,7 @@ namespace UserService.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(RegisterUserCommand command)
         {
-            await _commandDispatcher.SendAsync(command);
+            await _busPublisher.PublishAsync(command);
             return Accepted($"api/users/{command.Id}", null);
         }
 

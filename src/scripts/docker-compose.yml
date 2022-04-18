@@ -10,6 +10,13 @@ services:
       - SEQ_FIRSTRUN_ADMINPASSWORDHASH=FHdmLztMlDXCUbIsVuEn3vjkqJdlJbWsJFMQRUq3G39bnr5xaQ==
     volumes:
       - "./.docker/seq/data:/data"
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - "./.docker/redis/data:/data"
   postgres:
     image: postgres:12
     hostname: postgres

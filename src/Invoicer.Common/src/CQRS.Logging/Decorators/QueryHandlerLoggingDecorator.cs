@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Convey.CQRS.Commands;
 using Convey.CQRS.Queries;
 using Convey.Types;
 using Microsoft.Extensions.DependencyInjection;

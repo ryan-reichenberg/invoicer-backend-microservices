@@ -35,7 +35,7 @@ namespace OperationsService.Messages.Handlers
 
             var context = _contextAccessor.GetCorrelationContext();
             var name = string.IsNullOrWhiteSpace(context?.Name) ? command.GetType().Name : context.Name;
-            var userId = context?.User?.Id;
+            var userId = context?.User?.Id ?? "test";
             var state = messageProperties.GetSagaState() ?? OperationState.Pending;
             var (updated, operation) = await _operationsService.TrySetAsync(correlationId, userId, name, state);
             if (!updated)
